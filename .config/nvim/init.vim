@@ -353,8 +353,8 @@ require("nvim-tree").setup({
       },
       glyphs = {
         folder = {
-          arrow_closed = "⏵",
-          arrow_open = "⏷",
+          arrow_closed = "▸",
+          arrow_open = "▾",
         },
         git = {
           unstaged = "◌",
@@ -383,7 +383,20 @@ require("nvim-tree").setup({
     },
   },
 })
-vim.keymap.set('n', '<Leader><tab>', ':NvimTreeFindFile<CR>')
+
+function tree_open_find_safe(args)
+  local currentPath = vim.api.nvim_buf_get_name(0)
+
+  if (currentPath == "" or vim.fn.filereadable(currentPath) == 0) then
+    vim.api.nvim_cmd({cmd = 'NvimTreeOpen'}, {})
+    return
+  end
+
+  vim.api.nvim_cmd({cmd = 'NvimTreeFindFile'}, {})
+end
+
+vim.api.nvim_create_user_command('TreeOpen', tree_open_find_safe, {})
+vim.keymap.set('n', '<Leader><tab>', ':TreeOpen<CR>')
 
 -- FZF-LUA
 require('fzf-lua').setup{
@@ -401,13 +414,13 @@ require('fzf-lua').setup{
 
 vim.keymap.set('n', '<C-p>', ':FzfLua git_files<CR>')
 vim.keymap.set('n', '<C-f>', ':FzfLua live_grep_native<CR>')
-vim.keymap.set('n', '<C-b>', ':FzfLua buffers<CR>')
-vim.keymap.set('n', '<C-m>', ':FzfLua oldfiles<CR>')
+vim.keymap.set('n', '<Leader>t', ':FzfLua tabs<CR>')
+vim.keymap.set('n', '<Leader>b', ':FzfLua buffers<CR>')
 vim.keymap.set('v', 'gs', '"gy:FzfLua grep_visual<CR>')
 
 -- TreeSJ
 local tsj = require('treesj')
-local langs = {--[[ configuration for languages ]]}
+local langs = {}
 
 tsj.setup({
   use_default_keymaps = false,
@@ -435,7 +448,6 @@ require('session_manager').setup({
   max_path_length = 120,
 })
 vim.keymap.set('n', '<Leader>s', ':SessionManager load_session<CR>')
-
 EOF
 endif
 
@@ -550,7 +562,6 @@ set splitbelow
 set splitright
 
 " Ale
-" Write this in your vimrc file
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 1
 let g:ale_completion_enabled = 1
@@ -561,27 +572,21 @@ let g:ale_linters = {
   \ 'python': ['flake8'],
   \ 'perl': ['perl-critic'],
   \}
-if $BVIM
-  let g:ale_pattern_options = {
-  \ '.*\.inc$': {'ale_enabled': 0},
-  \ '.*\.tmpl$': {'ale_enabled': 0},
-  \}
-endif
 let g:ale_sign_column_always = 1
-
 let g:ale_sign_error = '>'
 let g:ale_sign_warning = '-'
 let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰', '│', '─']
-let g:ale_floating_preview = 1
+let g:ale_fljating_preview = 1
 let g:ale_hover_to_floating_preview = 1
 
 let g:ale_set_signs = 1
 let g:ale_fixers = ['prettier', 'eslint']
 
-" Hotkeys
-" Navigating errors
-nnoremap <C-k> :ALENext<CR>
-nnoremap <C-j> :ALEPrevious<CR>
+" ALE Hotkeys
+nnoremap <Leader>j :ALENext<CR>
+nnoremap <Leader>k :ALEPrevious<CR>
+nnoremap <Leader>r :ALERename<CR>
+
 " Hover
 nnoremap m :ALEHover<CR>
 
@@ -591,6 +596,11 @@ highlight ALEStyleError ctermfg=darkgrey
 highlight ALEStyleWarning ctermfg=darkgrey
 
 if $BVIM
+  let g:ale_pattern_options = {
+  \ '.*\.inc$': {'ale_enabled': 0},
+  \ '.*\.tmpl$': {'ale_enabled': 0},
+  \}
+
   augroup FiletypeGroup
     au BufNewFile,BufRead *.inc set filetype=tmpl
   augroup END
