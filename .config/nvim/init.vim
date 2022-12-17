@@ -586,6 +586,7 @@ let g:ale_fixers = ['prettier', 'eslint']
 nnoremap <Leader>j :ALENext<CR>
 nnoremap <Leader>k :ALEPrevious<CR>
 nnoremap <Leader>r :ALERename<CR>
+nnoremap <Leader>f :ALEFix<CR>
 
 " Hover
 nnoremap m :ALEHover<CR>
