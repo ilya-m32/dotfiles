@@ -6,16 +6,22 @@ mkdir -p ~/.config
 if grep -q ID=ubuntu /etc/os-release; then
     if whiptail --yesno "Ubuntu detected. Install Ubuntu-specific apps?" 20 80 ;then
         echo -e "\nUbuntu OS, installing some must-haves"
-        # Clean-up snap firefox
-        sudo snap remove firefox
 
         # Latest stable neovim
         sudo add-apt-repository ppa:neovim-ppa/stable
+        # And firefox
+        sudo add-apt-repository ppa:mozillateam/ppa
+        echo 'Package: *
+        Pin: release o=LP-PPA-mozillateam
+        Pin-Priority: 1001' | sudo tee /etc/apt/preferences.d/mozilla-firefox
 
         # Basic software
         sudo apt update
         sudo apt install zsh ripgrep pwgen ncal neovim tmux lm-sensors tldr cmake curl easy-rsa fonts-hack-ttf \
             gcc git jq nodejs npm ranger suckless-tools tmuxinator whois wmctrl xclip xdotool yarnpkg
+
+        # Clean-up snap firefox
+        sudo snap remove firefox
 
         # GUI
         if whiptail --yesno "Install GUI stuff?" 10 60 ;then

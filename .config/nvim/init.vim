@@ -50,6 +50,7 @@ call vundle#begin()
     Plugin 'ibhagwan/fzf-lua'
     Plugin 'stevearc/dressing.nvim'
     Plugin 'nvim-lualine/lualine.nvim'
+    Plugin 'nvim-tree/nvim-web-devicons'
     Plugin 'nvim-tree/nvim-tree.lua'
     Plugin 'Wansmer/treesj'
     Plugin 'Shatur/neovim-session-manager'
@@ -177,7 +178,7 @@ require'lualine'.setup {
     lualine_y = {},
     lualine_z = {}
   },
-  tabline = {
+  tabline_disabled = {
     lualine_a = {},
     lualine_b = {
       {
@@ -347,7 +348,7 @@ require("nvim-tree").setup({
       git_placement = "signcolumn",
       show = {
         git = true,
-        file = false,
+        file = true,
         folder = true,
         folder_arrow = true,
       },
