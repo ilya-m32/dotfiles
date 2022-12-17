@@ -67,9 +67,9 @@ else
     echo "oh-my-zsh is already installed"
 fi
 
-echo -e "\nInstalling Hack patched font..."
+echo -e "\nInstalling fonts..."
 mkdir -p ~/.local/share/fonts
-curl -fLo "$HOME/.local/share/fonts/Hack Regular Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/Regular/complete/Hack%20Regular%20Nerd%20Font%20Complete.ttf
+cp .local/share/fonts/* ~/.local/share/fonts
 
 echo -e "\nSet up main symlinks..."
 mkdir -p $HOME/.config/nvim/
