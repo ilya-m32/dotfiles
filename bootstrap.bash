@@ -12,8 +12,8 @@ if grep -q ID=ubuntu /etc/os-release; then
         # And firefox
         sudo add-apt-repository ppa:mozillateam/ppa
         echo 'Package: *
-        Pin: release o=LP-PPA-mozillateam
-        Pin-Priority: 1001' | sudo tee /etc/apt/preferences.d/mozilla-firefox
+Pin: release o=LP-PPA-mozillateam
+Pin-Priority: 1001' | sudo tee /etc/apt/preferences.d/mozilla-firefox
 
         # Basic software
         sudo apt update
