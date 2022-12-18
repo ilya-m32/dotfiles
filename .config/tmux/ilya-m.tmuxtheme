@@ -2,27 +2,27 @@
 set -g status-interval 1
 
 # Basic status bar colors
-set -g status-style fg=colour240,bg=colour233
+set -g status-style fg=#969896,bg=#1d1f21
 
 # Left side of status bar
-set -g status-left-style bg=colour233,fg=colour243
+set -g status-left-style bg=#1d1f21,fg=#c5c8c6
 set -g status-left-length 45
-set -g status-left "#[fg=colour245,bg=colour235] %d-%m-%y #[fg=colour240,bg=colour235]"
+set -g status-left "#[fg=#969896,bg=#1d1f21] %d-%m-%y #[fg=colour240,bg=colour235]"
 
 # Right side of status bar
-set -g status-right-style bg=colour233,fg=colour243
+set -g status-right-style bg=#1d1f21,fg=#c5c8c6
 set -g status-right-length 45
-set -g status-right "#[fg=colour245,bg=colour235] %H:%M:%S #[fg=colour240,bg=colour235]"
+set -g status-right "#[fg=#969896,bg=#1d1f22] %H:%M:%S #[fg=colour240,bg=colour235]"
 
 # Window status
 set -g window-status-format " #I:#W#F "
 set -g window-status-current-format " #I:#W#F "
 
 # Current window status
-set -g window-status-current-style bg=colour100,fg=colour232
+set -g window-status-current-style bg=#282a2e,fg=#c5c8c6
 
 # Window with activity status
-set -g window-status-activity-style bg=colour233,fg=colour107
+set -g window-status-activity-style bg=#282a2e,fg=#c5c8c6
 
 # Window separator
 set -g window-status-separator ""
