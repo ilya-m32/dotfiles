@@ -16,57 +16,54 @@ filetype plugin indent on
 " ======================
 " ======= Plugins
 " ======================
-set rtp+=~/.vim/bundle/Vundle.vim
+call plug#begin()
+  Plug 'AndrewRadev/sideways.vim'
+  Plug 'Yggdroot/indentLine'
+  Plug 'airblade/vim-rooter'
+  Plug 'chriskempson/base16-vim'
+  Plug 'RRethy/nvim-base16'
+  Plug 'christoomey/vim-tmux-navigator'
+  Plug 'editorconfig/editorconfig-vim'
+  Plug 'jiangmiao/auto-pairs'
+  Plug 'matze/vim-move'
+  Plug 'mhinz/vim-startify'
+  Plug 'othree/html5.vim'
+  Plug 'tpope/vim-commentary'
+  Plug 'tpope/vim-fugitive'
+  Plug 'tpope/vim-repeat'
+  Plug 'tpope/vim-sleuth'
+  Plug 'tpope/vim-surround'
+  Plug 'w0rp/ale', { 'tag': 'v3.3.0' }
+  Plug 'wesQ3/vim-windowswap'
+  Plug 'ryanoasis/vim-devicons'
 
-call vundle#begin()
-  Plugin 'VundleVim/Vundle.vim'
-  Plugin 'AndrewRadev/sideways.vim'
-  Plugin 'Yggdroot/indentLine'
-  Plugin 'airblade/vim-rooter'
-  Plugin 'chriskempson/base16-vim'
-  Plugin 'RRethy/nvim-base16'
-  Plugin 'christoomey/vim-tmux-navigator'
-  Plugin 'editorconfig/editorconfig-vim'
-  Plugin 'jiangmiao/auto-pairs'
-  Plugin 'matze/vim-move'
-  Plugin 'mhinz/vim-startify'
-  Plugin 'othree/html5.vim'
-  Plugin 'tpope/vim-commentary.git'
-  Plugin 'tpope/vim-fugitive'
-  Plugin 'tpope/vim-repeat'
-  Plugin 'tpope/vim-sleuth'
-  Plugin 'tpope/vim-surround'
-  Plugin 'w0rp/ale'
-  Plugin 'wesQ3/vim-windowswap'
-  Plugin 'ryanoasis/vim-devicons'
-
-  Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
 
   " NVIM-only
   if has('nvim')
-    Plugin 'nvim-treesitter/nvim-treesitter'
-    Plugin 'nvim-lua/plenary.nvim'
-    Plugin 'gbprod/yanky.nvim'
-    Plugin 'ibhagwan/fzf-lua'
-    Plugin 'stevearc/dressing.nvim'
-    Plugin 'nvim-lualine/lualine.nvim'
-    Plugin 'nvim-tree/nvim-web-devicons'
-    Plugin 'nvim-tree/nvim-tree.lua'
-    Plugin 'Wansmer/treesj'
-    Plugin 'Shatur/neovim-session-manager'
+    Plug 'nvim-treesitter/nvim-treesitter'
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'gbprod/yanky.nvim'
+    Plug 'ibhagwan/fzf-lua'
+    Plug 'stevearc/dressing.nvim'
+    Plug 'nvim-lualine/lualine.nvim'
+    Plug 'nvim-tree/nvim-web-devicons'
+    Plug 'nvim-tree/nvim-tree.lua'
+    Plug 'Wansmer/treesj'
+    Plug 'Shatur/neovim-session-manager'
   else
   " Vimscript analogs
-    Plugin 'junegunn/fzf.vim'
-    Plugin 'HerringtonDarkholme/yats.vim'
-    Plugin 'scrooloose/nerdtree'
-    Plugin 'pangloss/vim-javascript'
+    Plug 'junegunn/fzf.vim'
+    Plug 'HerringtonDarkholme/yats.vim'
+    Plug 'scrooloose/nerdtree'
+    Plug 'pangloss/vim-javascript'
   endif
 
   if $BVIM
     let plugin_path = $BVIM
-    Plugin plugin_path
+    Plug plugin_path
   endif
-call vundle#end()
+call plug#end()
 
 " ======================
 " ======= Common remaps
