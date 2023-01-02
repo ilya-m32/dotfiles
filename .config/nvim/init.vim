@@ -175,7 +175,7 @@ require'lualine'.setup {
     lualine_y = {},
     lualine_z = {}
   },
-  tabline_disabled = {
+  tabline = {
     lualine_a = {},
     lualine_b = {
       {
@@ -576,6 +576,7 @@ let g:ale_sign_warning = '-'
 let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰', '│', '─']
 let g:ale_fljating_preview = 1
 let g:ale_hover_to_floating_preview = 1
+let g:ale_virtualtext_cursor = 'disabled'
 
 let g:ale_set_signs = 1
 let g:ale_fixers = ['prettier', 'eslint']
