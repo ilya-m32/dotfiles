@@ -481,7 +481,7 @@ set hid
 
 set wildignore+=.git,.hg,.svn,*.o,*.aux,*.png,*.jpg,*.pdf
 
-"When searching try to be smart about cases 
+"When searching try to be smart about cases
 set smartcase
 
 " Don't redraw while executing macros (good performance config)
@@ -577,6 +577,7 @@ let g:ale_linters = {
   \ 'typescript': ['eslint', 'tsserver'],
   \ 'python': ['flake8'],
   \ 'perl': ['perl-critic'],
+  \ 'cpp': ['clangd'],
   \}
 let g:ale_sign_column_always = 1
 let g:ale_sign_error = '>'
@@ -587,7 +588,14 @@ let g:ale_hover_to_floating_preview = 1
 let g:ale_virtualtext_cursor = 'disabled'
 
 let g:ale_set_signs = 1
-let g:ale_fixers = ['prettier', 'eslint']
+let g:ale_js_fixes = ['prettier', 'eslint']
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': g:ale_js_fixes,
+\   'typescript': g:ale_js_fixes,
+\   'typescriptreact': g:ale_js_fixes,
+\   'cpp': ['clang-format'],
+\}
 
 " ALE Hotkeys
 nnoremap <Leader>j :ALENext<CR>
@@ -618,7 +626,13 @@ if $BVIM
 endif
 
 " Arduino
-let g:arduino_dir = '/usr/share/arduino'
+augroup FiletypeGroup
+  autocmd!
+  au BufNewFile,BufRead *.ino set filetype=cpp
+
+  autocmd!
+  let b:arduino_dir = '/usr/share/arduino'
+augroup END
 
 " Vim node gf
 set path+=.,src
