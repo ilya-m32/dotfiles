@@ -29,7 +29,6 @@ call plug#begin()
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-sleuth'
-  Plug 'tpope/vim-surround'
   Plug 'wesQ3/vim-windowswap'
 
   " Visuals
@@ -50,21 +49,32 @@ call plug#begin()
 
   " NVIM-only
   if has('nvim')
+    " Tresitter integration
     Plug 'nvim-treesitter/nvim-treesitter'
-    Plug 'nvim-lua/plenary.nvim'
-    Plug 'gbprod/yanky.nvim'
+
+    " fzf-integration
     Plug 'ibhagwan/fzf-lua'
-    Plug 'stevearc/dressing.nvim'
-    Plug 'nvim-lualine/lualine.nvim'
+
+    " Commonly used functions
+    Plug 'nvim-lua/plenary.nvim'
+
+    " nvim tree
     Plug 'nvim-tree/nvim-web-devicons'
     Plug 'nvim-tree/nvim-tree.lua'
+
+    Plug 'gbprod/yanky.nvim'
+    Plug 'stevearc/dressing.nvim'
+    Plug 'nvim-lualine/lualine.nvim'
     Plug 'Wansmer/treesj'
     Plug 'Shatur/neovim-session-manager'
+
+    Plug 'kylechui/nvim-surround'
   else
   " Vimscript analogs
     Plug 'HerringtonDarkholme/yats.vim'
     Plug 'scrooloose/nerdtree'
     Plug 'pangloss/vim-javascript'
+    Plug 'tpope/vim-surround'
   endif
 
   if $BVIM
@@ -454,6 +464,10 @@ require('session_manager').setup({
   max_path_length = 120,
 })
 vim.keymap.set('n', '<Leader>s', ':SessionManager load_session<CR>')
+
+-- Surround.nvim
+require("nvim-surround").setup({})
+
 EOF
 endif
 

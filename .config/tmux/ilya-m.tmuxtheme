@@ -2,7 +2,7 @@
 set -g status-interval 1
 
 # Basic status bar colors
-set -g status-style fg=#969896,bg=#1d1f21
+set -g status-style bg=#1d1f21,fg=#969896
 
 # Left side of status bar
 set -g status-left-style bg=#1d1f21,fg=#c5c8c6
@@ -22,7 +22,7 @@ set -g window-status-current-format " #I:#W#F "
 set -g window-status-current-style bg=#282a2e,fg=#c5c8c6
 
 # Window with activity status
-set -g window-status-activity-style bg=#282a2e,fg=#c5c8c6
+set -g window-status-activity-style bg=#1d1f21,fg=#969896
 
 # Window separator
 set -g window-status-separator ""

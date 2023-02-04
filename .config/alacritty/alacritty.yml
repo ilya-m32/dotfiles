@@ -16,3 +16,5 @@ cursor:
   style:
     shape: Beam
     blinking: On
+# window:
+#   decorations: None
