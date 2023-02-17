@@ -18,13 +18,11 @@ filetype plugin indent on
 " ======================
 call plug#begin()
   " Universal basic
-  Plug 'AndrewRadev/sideways.vim'
   Plug 'Yggdroot/indentLine'
   Plug 'airblade/vim-rooter'
   Plug 'christoomey/vim-tmux-navigator'
   Plug 'editorconfig/editorconfig-vim'
   Plug 'jiangmiao/auto-pairs'
-  Plug 'matze/vim-move'
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-repeat'
@@ -35,7 +33,6 @@ call plug#begin()
   Plug 'mhinz/vim-startify'
   Plug 'chriskempson/base16-vim'
   Plug 'RRethy/nvim-base16'
-  Plug 'ryanoasis/vim-devicons'
 
   " Key plugins
   Plug 'w0rp/ale', { 'tag': 'v3.3.0' }
@@ -58,23 +55,23 @@ call plug#begin()
     " Commonly used functions
     Plug 'nvim-lua/plenary.nvim'
 
-    " nvim tree
-    Plug 'nvim-tree/nvim-web-devicons'
+    " navigation
     Plug 'nvim-tree/nvim-tree.lua'
 
-    Plug 'gbprod/yanky.nvim'
+    " visuals
     Plug 'stevearc/dressing.nvim'
-    Plug 'nvim-lualine/lualine.nvim'
-    Plug 'Wansmer/treesj'
-    Plug 'Shatur/neovim-session-manager'
+    Plug 'nvim-tree/nvim-web-devicons'
 
+    " line
+    Plug 'nvim-lualine/lualine.nvim'
+
+    " text editing
+    Plug 'gbprod/yanky.nvim'
+    Plug 'Wansmer/treesj'
     Plug 'kylechui/nvim-surround'
-  else
-  " Vimscript analogs
-    Plug 'HerringtonDarkholme/yats.vim'
-    Plug 'scrooloose/nerdtree'
-    Plug 'pangloss/vim-javascript'
-    Plug 'tpope/vim-surround'
+
+    " Session
+    Plug 'Shatur/neovim-session-manager'
   endif
 
   if $BVIM
