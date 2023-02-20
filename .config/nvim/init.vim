@@ -70,6 +70,9 @@ call plug#begin()
     Plug 'Wansmer/treesj'
     Plug 'kylechui/nvim-surround'
 
+    " Global search & replace
+    Plug 'nvim-pack/nvim-spectre'
+
     " Session
     Plug 'Shatur/neovim-session-manager'
   endif
@@ -120,6 +123,34 @@ while c <= 99
 " Better word search
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+
+if has('nvim')
+lua << EOF
+local map = function(mode, key, rhs, opts)
+  if key == '' then return end
+
+  opts = vim.tbl_deep_extend('force', { noremap = true, silent = true }, opts or {})
+  -- Use mapping description only in Neovim>=0.7
+  if vim.fn.has('nvim-0.7') == 0 then opts.desc = nil end
+
+  vim.api.nvim_set_keymap(mode, key, rhs, opts)
+end
+
+-- to be immediately shown.
+map('c', '<M-h>', '<Left>',  { silent = false, desc = 'Left' })
+map('c', '<M-l>', '<Right>', { silent = false, desc = 'Right' })
+
+-- Don't `noremap` in insert mode to have these keybindings behave exactly
+-- like arrows (crucial inside TelescopePrompt)
+map('i', '<M-h>', '<Left>',  { noremap = false, desc = 'Left' })
+map('i', '<M-j>', '<Down>',  { noremap = false, desc = 'Down' })
+map('i', '<M-k>', '<Up>',    { noremap = false, desc = 'Up' })
+map('i', '<M-l>', '<Right>', { noremap = false, desc = 'Right' })
+EOF
+endif
+
+" Spectre
+nnoremap <leader>R <cmd>lua require('spectre').open()<CR>
 
 " ======================
 " ======= Plugin options
@@ -246,10 +277,10 @@ require('dressing').setup({
     anchor = "NW",
     border = "rounded",
     -- 'editor' and 'win' will default to being centered
-    relative = "editor",
+    relative = "cursor",
 
     -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
-    prefer_width = 0.5,
+    prefer_width = 0.2,
     width = nil,
     max_width = 0.66,
     min_width = 0.2,
@@ -275,9 +306,7 @@ require('dressing').setup({
       },
     },
     override = function(conf)
-      -- This is the config that will be passed to nvim_open_win.
-      -- Change values here to customize the layout
-      -- print(vim.inspect(conf))
+      conf.row = 1
       return conf
     end,
   },
@@ -447,6 +476,9 @@ tsj.setup({
 vim.keymap.set('n', 'gJ', ':TSJSplit<CR>')
 vim.keymap.set('n', 'gK', ':TSJJoin<CR>')
 
+-- Surround.nvim
+require("nvim-surround").setup({})
+
 -- Session manager
 require('session_manager').setup({
   autoload_mode = require('session_manager.config').AutoloadMode.Disabled,
@@ -461,9 +493,6 @@ require('session_manager').setup({
   max_path_length = 120,
 })
 vim.keymap.set('n', '<Leader>s', ':SessionManager load_session<CR>')
-
--- Surround.nvim
-require("nvim-surround").setup({})
 
 EOF
 endif
@@ -594,7 +623,7 @@ let g:ale_sign_column_always = 1
 let g:ale_sign_error = '>'
 let g:ale_sign_warning = '-'
 let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰', '│', '─']
-let g:ale_fljating_preview = 1
+let g:ale_floating_preview = 1
 let g:ale_hover_to_floating_preview = 1
 let g:ale_virtualtext_cursor = 'disabled'
 
@@ -609,12 +638,9 @@ let g:ale_fixers = {
 \}
 
 " ALE Hotkeys
-nnoremap <Leader>j :ALENext<CR>
-nnoremap <Leader>k :ALEPrevious<CR>
+nnoremap <Leader>n :ALENext<CR>
 nnoremap <Leader>r :ALERename<CR>
 nnoremap <Leader>f :ALEFix<CR>
-
-" Hover
 nnoremap m :ALEHover<CR>
 
 highlight ALEError ctermbg=none cterm=underline
