@@ -1,17 +1,10 @@
-" ======================
-" ======= Main settings
-" ======================
-set shell=/bin/zsh
+function! s:source_config(path)
+ let l:full_path = join([stdpath('config'), a:path], '/')
+ execute "source " . l:full_path
+endfunction
 
-" Colors & theme
-set background=dark
-set t_co=256
-let base16colorspace=256
-
-hi MatchParen cterm=bold ctermbg=none ctermfg=darkred
-
-filetype off
-filetype plugin indent on
+call s:source_config('configs/editor.vim')
+call s:source_config('configs/keymaps.vim')
 
 " ======================
 " ======= Plugins
@@ -83,74 +76,8 @@ call plug#begin()
   endif
 call plug#end()
 
-" ======================
-" ======= Common remaps
-" ======================
-" most useful remap
-nnoremap ; :
-" Leader for my custom commands
-let g:mapleader = ","
-
-" Auto indent pasted text.
-nnoremap p p=`]<C-o>
-nnoremap P P=`]<C-o>
-
-" To the blackhole if not specified to copy
-nnoremap x "_x
-nnoremap d "_d
-nnoremap D "_D
-vnoremap d "_d
-nnoremap <leader>d ""d
-nnoremap <leader>D ""D
-vnoremap <leader>d ""d
-
-" Hide search results
-nnoremap <Leader>, :noh<cr>
-
-" replace current selection with default register without yanking it
-vnoremap <leader>p "_dP
-
-" Allowing . to work in visual line mode
-vnoremap . :normal .<CR>
-
-" Buffers switch hotkey
-let c = 1
-while c <= 99
-    execute "nnoremap " . c . "gb :" . c . "b\<CR>"
-        let c += 1
-    endwhile
-
-" Better word search
-vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
-vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
-
-if has('nvim')
-lua << EOF
-local map = function(mode, key, rhs, opts)
-  if key == '' then return end
-
-  opts = vim.tbl_deep_extend('force', { noremap = true, silent = true }, opts or {})
-  -- Use mapping description only in Neovim>=0.7
-  if vim.fn.has('nvim-0.7') == 0 then opts.desc = nil end
-
-  vim.api.nvim_set_keymap(mode, key, rhs, opts)
-end
-
--- to be immediately shown.
-map('c', '<M-h>', '<Left>',  { silent = false, desc = 'Left' })
-map('c', '<M-l>', '<Right>', { silent = false, desc = 'Right' })
-
--- Don't `noremap` in insert mode to have these keybindings behave exactly
--- like arrows (crucial inside TelescopePrompt)
-map('i', '<M-h>', '<Left>',  { noremap = false, desc = 'Left' })
-map('i', '<M-j>', '<Down>',  { noremap = false, desc = 'Down' })
-map('i', '<M-k>', '<Up>',    { noremap = false, desc = 'Up' })
-map('i', '<M-l>', '<Right>', { noremap = false, desc = 'Right' })
-EOF
-endif
-
 " Spectre
-nnoremap <leader>R <cmd>lua require('spectre').open()<CR>
+nnoremap <leader>R :Spectre<CR>
 
 " ======================
 " ======= Plugin options
@@ -497,116 +424,6 @@ vim.keymap.set('n', '<Leader>s', ':SessionManager load_session<CR>')
 EOF
 endif
 
-" JSON highlighter
-set conceallevel=0
-" Disable quote concealing in JSON files
-let g:vim_json_conceal=0
-
-" ======================
-" ======= Other options
-" ======================
-" timeouts for fast esc and normal mode
-set timeoutlen=1000 ttimeoutlen=0
-
-set history=500
-
-" Speedup
-set synmaxcol=250 " Don't bother highlighting anything over 200 chars
-
-" Not using gui cursor: default is fine
-set guicursor=
-
-set cmdheight=1
-set hid
-
-set wildignore+=.git,.hg,.svn,*.o,*.aux,*.png,*.jpg,*.pdf
-
-"When searching try to be smart about cases
-set smartcase
-
-" Don't redraw while executing macros (good performance config)
-set lazyredraw
-
-" For regular expressions turn magic on
-set magic
-
-" Show matching brackets when text indicator is over them
-set showmatch
-
-" How many tenths of a second to blink when matching brackets
-set mat=1
-
-" Add a bit extra margin to the left
-set foldcolumn=0
-
-" Configure backspace so it acts as it should act
-set backspace=eol,start,indent
-set whichwrap+=<,>,h,l
-
-" Ignore case when searching
-set ignorecase
-set smartcase
-
-set nobackup
-set nowb
-set noswapfile
-
-set expandtab
-set smarttab
-
-" Copy current filepath
-command! CopyBuffer let @+ = expand('%:p')
-
-" 1 tab == 4 spaces
-set shiftwidth=4
-set tabstop=4
-
-" Linebreak on 500 characters
-set lbr
-set tw=500
-
-set ai "Auto indent
-set si "Smart indent
-set wrap "Wrap lines
-
-" Old regex engine disabled
-set re=0
-
-set list listchars=tab:\ \ ,trail:·
-
-set nowrap
-set linebreak
-
-" Scrolling
-set scrolloff=8
-set sidescrolloff=5
-set sidescroll=1
-
-" Search
-set incsearch
-set hlsearch
-set ignorecase
-set smartcase
-
-" Working with system buffer
-if has('clipboard')
-  map <F2> "+p
-  map <F3> "+y
-endif
-
-" Lines
-set colorcolumn=120
-set cursorline
-set synmaxcol=900
-
-" Number lines
-set number relativenumber
-set numberwidth=2
-
-" Splits
-set splitbelow
-set splitright
-
 " Ale
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 1
@@ -670,20 +487,3 @@ augroup FiletypeGroup
   autocmd!
   let b:arduino_dir = '/usr/share/arduino'
 augroup END
-
-" Vim node gf
-set path+=.,src
-set suffixesadd+=.js,.jsx
-
-" ======================
-" ======= Crutches & stuff
-" ======================
-
-" Going to English when leaving insert mode
-function! SetUsLayout()
-  silent !gsettings set org.gnome.desktop.input-sources current 0
-endfunction
-
-if has('linux')
-  autocmd InsertLeave * call SetUsLayout()
-endif
