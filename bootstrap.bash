@@ -36,7 +36,7 @@ if grep -q ID=centos /etc/os-release; then
     fi
 
     mkdir -p "$HOME/.local/bin"
-    wget https://github.com/neovim/neovim/releases/download/v0.6.0/nvim.appimage --output-document="$HOME/.local/bin/nvim"
+    wget https://github.com/neovim/neovim/releases/download/v0.8.3/nvim.appimage --output-document="$HOME/.local/bin/nvim"
     chmod +x "$HOME/.local/bin/nvim"
 fi
 
