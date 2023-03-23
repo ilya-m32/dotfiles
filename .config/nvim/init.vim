@@ -1,5 +1,5 @@
 function! s:source_config(path)
- let l:full_path = join([stdpath('config'), a:path], '/')
+ let l:full_path = join([has('nvim') ? stdpath('config') : '~/.config/nvim', a:path], '/')
  execute "source " . l:full_path
 endfunction
 
@@ -458,6 +458,9 @@ let g:ale_fixers = {
 nnoremap <Leader>n :ALENext<CR>
 nnoremap <Leader>r :ALERename<CR>
 nnoremap <Leader>f :ALEFix<CR>
+nnoremap <Leader>gd :ALEGoToDefinition<CR>
+nnoremap <Leader>gi :ALEGoToImplementation<CR>
+nnoremap <Leader>gt :ALEGoToTypeDefinition<CR>
 nnoremap m :ALEHover<CR>
 
 highlight ALEError ctermbg=none cterm=underline
@@ -480,9 +483,9 @@ if $BVIM
 endif
 
 " Arduino
+autocmd!
+au BufNewFile,BufRead *.ino set filetype=cpp
 augroup FiletypeGroup
-  autocmd!
-  au BufNewFile,BufRead *.ino set filetype=cpp
 
   autocmd!
   let b:arduino_dir = '/usr/share/arduino'

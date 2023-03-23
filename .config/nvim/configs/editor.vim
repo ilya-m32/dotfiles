@@ -6,7 +6,6 @@ set shell=/bin/zsh
 " Colors & theme
 set background=dark
 set t_co=256
-let base16colorspace=256
 
 hi MatchParen cterm=bold ctermbg=none ctermfg=darkred
 
