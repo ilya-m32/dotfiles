@@ -490,3 +490,6 @@ augroup FiletypeGroup
   autocmd!
   let b:arduino_dir = '/usr/share/arduino'
 augroup END
+
+" Legacy syntax highlight, after theme is loaded
+syntax on
