@@ -465,7 +465,9 @@ nnoremap <Leader>gd :ALEGoToDefinition<CR>
 nnoremap <Leader>gi :ALEGoToImplementation<CR>
 nnoremap <Leader>gt :ALEGoToTypeDefinition<CR>
 nnoremap <Leader>ai :ALEImport<CR>
+nnoremap <Leader>F :ALEFindReferences<CR>
 nnoremap m :ALEHover<CR>
+nnoremap K :ALEDocumentation<CR>
 
 highlight ALEError ctermbg=none cterm=underline
 highlight ALEWarning ctermbg=none cterm=underline
