@@ -68,6 +68,9 @@ call plug#begin()
 
     " Session
     Plug 'Shatur/neovim-session-manager'
+
+    " Markdown previewer
+    Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
   endif
 
   if $BVIM
