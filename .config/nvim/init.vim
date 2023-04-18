@@ -432,6 +432,8 @@ let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 1
 let g:ale_completion_enabled = 1
 let g:ale_linters = {
+  \ 'text': ['write-good'],
+  \ 'markdown': ['write-good'],
   \ 'javascript': ['eslint'],
   \ 'jsx': ['eslint'],
   \ 'typescript': ['eslint', 'tsserver'],
@@ -499,3 +501,7 @@ augroup END
 
 " Legacy syntax highlight, after theme is loaded
 syntax on
+
+" Spell checking in neovim
+set spelllang=en_us
+set spell
