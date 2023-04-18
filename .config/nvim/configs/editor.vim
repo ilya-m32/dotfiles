@@ -122,9 +122,8 @@ set path+=.,src
 set suffixesadd+=.js,.jsx
 
 " JSON highlighter
-set conceallevel=0
-" Disable quote concealing in JSON files
 let g:vim_json_conceal=0
+let g:markdown_syntax_conceal=0
 
 
 " ======================
