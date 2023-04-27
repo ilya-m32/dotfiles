@@ -3,6 +3,22 @@ function! s:source_config(path)
  execute "source " . l:full_path
 endfunction
 
+" Clipboard fallback
+if has('nvim') && !empty($WAYLAND_DISPLAY) && executable('xclip')
+	let g:clipboard = {
+    \   'name': 'xclipOnWayland',
+    \   'copy': {
+    \      '+': ['xclip', '-quiet', '-i', '-selection', 'clipboard'],
+    \      '*': ['xclip', '-quiet', '-i', '-selection', 'primary'],
+    \    },
+    \   'paste': {
+    \      '+': ['xclip', '-o', '-selection', 'clipboard'],
+    \      '*': ['xclip', '-o', '-selection', 'primary'],
+    \   },
+    \   'cache_enabled': 1,
+    \ }
+endif
+
 call s:source_config('configs/editor.vim')
 call s:source_config('configs/keymaps.vim')
 
@@ -14,7 +30,6 @@ call plug#begin()
   Plug 'Yggdroot/indentLine'
   Plug 'airblade/vim-rooter'
   Plug 'christoomey/vim-tmux-navigator'
-  Plug 'editorconfig/editorconfig-vim'
   Plug 'jiangmiao/auto-pairs'
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-fugitive'
@@ -503,5 +518,5 @@ augroup END
 syntax on
 
 " Spell checking in neovim
-set spelllang=en_us
-set spell
+" set spelllang=en_us
+" set spell
