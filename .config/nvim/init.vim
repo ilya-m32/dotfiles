@@ -455,6 +455,7 @@ let g:ale_linters = {
   \ 'python': ['flake8'],
   \ 'perl': ['perl-critic'],
   \ 'cpp': ['clangd'],
+  \ 'rust': ['analyzer'],
   \}
 let g:ale_sign_column_always = 1
 let g:ale_sign_error = '>'
@@ -472,6 +473,7 @@ let g:ale_fixers = {
 \   'typescript': g:ale_js_fixes,
 \   'typescriptreact': g:ale_js_fixes,
 \   'cpp': ['clang-format'],
+\   'rust': ['rustfmt'],
 \}
 
 " ALE Hotkeys
