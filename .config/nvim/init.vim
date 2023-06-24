@@ -5,7 +5,7 @@ endfunction
 
 " Clipboard fallback
 if has('nvim') && !empty($WAYLAND_DISPLAY) && executable('xclip')
-	let g:clipboard = {
+ let g:clipboard = {
     \   'name': 'xclipOnWayland',
     \   'copy': {
     \      '+': ['xclip', '-quiet', '-i', '-selection', 'clipboard'],
@@ -310,11 +310,6 @@ require("nvim-tree").setup({
   sync_root_with_cwd = true,
   view = {
     adaptive_size = true,
-    mappings = {
-      list = {
-        { key = "u", action = "dir_up" },
-      },
-    },
     side = 'right',
     width = 40
   },
