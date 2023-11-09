@@ -88,6 +88,9 @@ call plug#begin()
     Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
     Plug 'lewis6991/gitsigns.nvim'
+
+    " Diff
+    Plug 'sindrets/diffview.nvim'
   endif
 
   if $BVIM
