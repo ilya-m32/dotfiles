@@ -224,7 +224,6 @@ require('dressing').setup({
     start_in_insert = true,
 
     -- These are passed to nvim_open_win
-    anchor = "NW",
     border = "rounded",
     -- 'editor' and 'win' will default to being centered
     relative = "cursor",
@@ -257,6 +256,7 @@ require('dressing').setup({
     },
     override = function(conf)
       conf.row = 1
+      conf.anchor = "NW"
       return conf
     end,
   },
