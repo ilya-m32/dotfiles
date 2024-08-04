@@ -7,8 +7,6 @@ if grep -q ID=ubuntu /etc/os-release; then
     if whiptail --yesno "Ubuntu detected. Install Ubuntu-specific apps?" 20 80 ;then
         echo -e "\nUbuntu OS, installing some must-haves"
 
-        # Latest stable neovim
-        sudo add-apt-repository ppa:neovim-ppa/stable
         # And firefox
         sudo add-apt-repository ppa:mozillateam/ppa
         echo 'Package: *
