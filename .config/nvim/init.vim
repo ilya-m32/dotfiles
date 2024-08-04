@@ -22,6 +22,11 @@ endif
 call s:source_config('configs/editor.vim')
 call s:source_config('configs/keymaps.vim')
 
+if has('nvim')
+  " Lualine does this in buffers
+  set showtabline=0
+endif
+
 " ======================
 " ======= Plugins
 " ======================
@@ -91,6 +96,9 @@ call plug#begin()
 
     " Diff
     Plug 'sindrets/diffview.nvim'
+
+    " Use tmux tabline
+    Plug 'vimpostor/vim-tpipeline'
   endif
 
   if $BVIM
@@ -98,6 +106,10 @@ call plug#begin()
     Plug plugin_path
   endif
 call plug#end()
+
+" Tmux pipe
+let &t_fe = "\<Esc>[?1004h"
+let &t_fd = "\<Esc>[?1004l"
 
 " Spectre
 nnoremap <leader>R :Spectre<CR>
@@ -145,6 +157,17 @@ require'nvim-treesitter.configs'.setup {
     },
 }
 
+local function diff_source()
+  local gitsigns = vim.b.gitsigns_status_dict
+  if gitsigns then
+    return {
+      added = gitsigns.added,
+      modified = gitsigns.changed,
+      removed = gitsigns.removed
+    }
+  end
+end
+
 -- Lualine
 require'lualine'.setup {
   options = {
@@ -154,13 +177,44 @@ require'lualine'.setup {
     section_separators = { left = '', right = ''},
     disabled_filetypes = {},
     always_divide_middle = true,
+    globalstatus = true,
   },
   sections = {
     lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff'},
-    lualine_c = {'filename'},
-    lualine_x = {'encoding', 'fileformat', 'filetype'},
-    lualine_y = {},
+    lualine_b = {
+      {'b:gitsigns_head'},
+    --  {'diff', source = diff_source}
+    },
+    lualine_c = {
+      {
+        'diagnostics',
+        sources = { 'nvim_diagnostic', 'ale' },
+        always_visible = true,   -- Show diagnostics even if there are none.
+      },
+      {
+        'buffers',
+        show_filename_only = true,
+        show_modified_status = true,
+        mode = 4,
+        max_length = 60,
+
+        buffers_color = {
+          active = 'MoreMsg',
+        },
+      }
+    },
+    lualine_x = {
+      {
+        'tabs',
+        mode = 2,
+        tabs_color = {
+          active = 'MoreMsg',
+        },
+      }
+    },
+    lualine_y = {
+      'encoding', 'fileformat', 'filetype',
+    },
     lualine_z = {'location'}
   },
   inactive_sections = {
@@ -171,33 +225,7 @@ require'lualine'.setup {
     lualine_y = {},
     lualine_z = {}
   },
-  tabline = {
-    lualine_a = {},
-    lualine_b = {
-      {
-        'buffers',
-        show_filename_only = true,
-        show_modified_status = true,
-        mode = 2,
-
-        buffers_color = {
-          active = 'MoreMsg',
-        },
-      }
-    },
-    lualine_c = {},
-    lualine_x = {},
-    lualine_y = {
-      {
-        'tabs',
-        mode = 2,
-        tabs_color = {
-          active = 'MoreMsg',
-        },
-      }
-    },
-    lualine_z = {},
-  },
+  tabline = {},
   extensions = {'nvim-tree', 'fzf', 'fugitive'}
 }
 
@@ -207,7 +235,6 @@ local FZF_LUA_WINOPTS = {
   height = 0.4,
   width = 1,
   row = 1,
-  -- border = "none",
   preview = {
     horizontal = 'right:40%'
   },
@@ -490,8 +517,8 @@ let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 1
 let g:ale_completion_enabled = 1
 let g:ale_linters = {
-  \ 'text': ['write-good'],
-  \ 'markdown': ['write-good'],
+  \ 'text': ['write-good', 'proselint'],
+  \ 'markdown': ['write-good', 'proselint'],
   \ 'javascript': ['eslint'],
   \ 'jsx': ['eslint'],
   \ 'typescript': ['eslint', 'tsserver'],
