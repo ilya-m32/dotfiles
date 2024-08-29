@@ -48,7 +48,7 @@ call plug#begin()
   Plug 'RRethy/nvim-base16'
 
   " Key plugins
-  Plug 'w0rp/ale', { 'tag': 'v3.3.0' }
+  Plug 'w0rp/ale', {}
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
 
   " Webdev
@@ -107,9 +107,15 @@ call plug#begin()
   endif
 call plug#end()
 
+call s:source_config('plug.snapshot')
+
 " Tmux pipe
-let &t_fe = "\<Esc>[?1004h"
-let &t_fd = "\<Esc>[?1004l"
+if has('nvim')
+  let &t_fe = "\<Esc>[?1004h"
+  let &t_fd = "\<Esc>[?1004l"
+  set cmdheight=1
+  highlight link MsgArea StatusLineNC
+endif
 
 " Spectre
 nnoremap <leader>R :Spectre<CR>
@@ -210,7 +216,13 @@ require'lualine'.setup {
         tabs_color = {
           active = 'MoreMsg',
         },
-      }
+      },
+      {
+          'searchcount',
+          maxcount = 999,
+          timeout = 500,
+      },
+      'selectioncount'
     },
     lualine_y = {
       'encoding', 'fileformat', 'filetype',
@@ -517,7 +529,6 @@ let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 1
 let g:ale_completion_enabled = 1
 let g:ale_linters = {
-  \ 'text': ['write-good', 'proselint'],
   \ 'markdown': ['write-good', 'proselint'],
   \ 'javascript': ['eslint'],
   \ 'jsx': ['eslint'],
