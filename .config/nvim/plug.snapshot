@@ -35,6 +35,3 @@ silent! let g:plugs['vim-tmux-navigator'].commit = '5b3c701686fb4e6629c100ed32e8
 silent! let g:plugs['vim-tpipeline'].commit = 'f59f144b73e79aae7a73bb86bf527e79ad86de8f'
 silent! let g:plugs['vim-windowswap'].commit = '15db3f697aa1fa696d99fcdc920c90cd2cec855e'
 silent! let g:plugs['yanky.nvim'].commit = '73215b77d22ebb179cef98e7e1235825431d10e4'
-
-PlugUpdate!
-
