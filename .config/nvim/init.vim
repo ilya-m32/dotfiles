@@ -102,6 +102,7 @@ call plug#begin()
 
     " == Experimental ==
     Plug 'robitx/gp.nvim'
+    Plug 'echasnovski/mini.clue', { 'branch': 'stable' }
   endif
 
   if $BVIM
@@ -587,6 +588,7 @@ local conf = {
     end,
   }
 }
+
 require("gp").setup(conf)
 local function keymapOptions(desc)
   return {
@@ -596,6 +598,7 @@ local function keymapOptions(desc)
     desc = "GPT prompt " .. desc,
   }
 end
+
 -- Chat commands
 vim.keymap.set({"n", "i"}, "<Leader>GC", "<cmd>GpChatNew vsplit<cr>", keymapOptions("New Chat"))
 vim.keymap.set({"n", "i"}, "<Leader>GT", "<cmd>GpChatToggle vsplit<cr>", keymapOptions("Toggle Chat"))
@@ -608,8 +611,71 @@ vim.keymap.set({"n", "v"}, "<Leader>GI", ":<C-u>'<,'>GpImplement<cr>", keymapOpt
 vim.keymap.set({"n", "v"}, "<Leader>GR", ":<C-u>'<,'>GpRewrite<cr>", keymapOptions("Visual rewrite"))
 vim.keymap.set({"n", "v"}, "<Leader>GX", ":<C-u>'<,'>GpContext<cr>", keymapOptions("Visual GpContext"))
 
+-- clues
+local miniclue = require('mini.clue')
+miniclue.setup({
+  triggers = {
+    -- Leader triggers
+    { mode = 'n', keys = '<Leader>' },
+    { mode = 'x', keys = '<Leader>' },
+
+    -- Built-in completion
+    { mode = 'i', keys = '<C-x>' },
+
+    -- `g` key
+    { mode = 'n', keys = 'g' },
+    { mode = 'x', keys = 'g' },
+
+    -- Marks
+    { mode = 'n', keys = "'" },
+    { mode = 'n', keys = '`' },
+    { mode = 'x', keys = "'" },
+    { mode = 'x', keys = '`' },
+
+    -- Registers
+    { mode = 'n', keys = '"' },
+    { mode = 'x', keys = '"' },
+    { mode = 'i', keys = '<C-r>' },
+    { mode = 'c', keys = '<C-r>' },
+
+    -- Window commands
+    { mode = 'n', keys = '<C-w>' },
+
+    -- `z` key
+    { mode = 'n', keys = 'z' },
+    { mode = 'x', keys = 'z' },
+  },
+
+  clues = {
+    -- Enhance this by adding descriptions for <Leader> mapping groups
+    miniclue.gen_clues.builtin_completion(),
+    miniclue.gen_clues.g(),
+    miniclue.gen_clues.marks(),
+    miniclue.gen_clues.registers(),
+    miniclue.gen_clues.windows(),
+    miniclue.gen_clues.z(),
+  },
+  window = {
+    config = {
+      anchor = 'SW',
+      width = 120,
+      col = (vim.o.columns - 120) / 2,
+      border = 'rounded',
+      row = 'auto',
+      style = 'minimal',
+    },
+
+    delay = 500,
+
+    -- Keys to scroll inside the clue window
+    scroll_down = '<C-d>',
+    scroll_up = '<C-u>',
+  },
+})
+
 EOF
 endif
+autocmd User WhichKey call which_key#register('<Space>', "g:which_key_map")
 
 " Ale
 let g:ale_lint_on_text_changed = 'never'
