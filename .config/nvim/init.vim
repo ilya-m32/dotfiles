@@ -37,7 +37,7 @@ call plug#begin()
   Plug 'christoomey/vim-tmux-navigator'
   Plug 'jiangmiao/auto-pairs'
   Plug 'tpope/vim-commentary'
-  Plug 'tpope/vim-fugitive'
+  " Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-sleuth'
   Plug 'wesQ3/vim-windowswap'
@@ -52,7 +52,7 @@ call plug#begin()
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
 
   " Webdev
-  Plug 'othree/html5.vim'
+  " Plug 'othree/html5.vim'
 
   " Domain specific
   Plug 'stevearc/vim-arduino', { 'for': 'arduino' }
@@ -68,7 +68,7 @@ call plug#begin()
     " Commonly used functions
     Plug 'nvim-lua/plenary.nvim'
 
-    " navigation
+    " Navigation
     Plug 'nvim-tree/nvim-tree.lua'
 
     " visuals
@@ -80,7 +80,7 @@ call plug#begin()
 
     " text editing
     Plug 'gbprod/yanky.nvim'
-    Plug 'Wansmer/treesj'
+    " Plug 'Wansmer/treesj'
     Plug 'kylechui/nvim-surround'
 
     " Global search & replace
@@ -102,7 +102,7 @@ call plug#begin()
 
     " == Experimental ==
     Plug 'robitx/gp.nvim'
-    Plug 'echasnovski/mini.clue', { 'branch': 'stable' }
+    Plug 'folke/which-key.nvim'
   endif
 
   if $BVIM
@@ -161,9 +161,7 @@ require'nvim-treesitter.configs'.setup {
         keymaps = {
             init_selection = "gnn",
             node_incremental = "grn",
-            scope_incremental = "grc",
-            node_decremental = "grm",
-        },
+            scope_incremental = "grc", node_decremental = "grm", },
     },
 }
 
@@ -447,22 +445,6 @@ vim.keymap.set('n', '<Leader>t', ':FzfLua tabs<CR>')
 vim.keymap.set('n', '<Leader>b', ':FzfLua buffers<CR>')
 vim.keymap.set('v', 'gs', '"gy:FzfLua grep_visual<CR>')
 
--- TreeSJ
-local tsj = require('treesj')
-local langs = {}
-
-tsj.setup({
-  use_default_keymaps = false,
-  check_syntax_error = true,
-  max_join_length = 120,
-  cursor_behavior = 'hold',
-  notify = true,
-  langs = langs,
-})
-
-vim.keymap.set('n', 'gJ', ':TSJSplit<CR>')
-vim.keymap.set('n', 'gK', ':TSJJoin<CR>')
-
 -- Surround.nvim
 require("nvim-surround").setup({})
 
@@ -528,7 +510,7 @@ local conf = {
   providers = {
     openai = {
       endpoint = "https://api.openai.com/v1/chat/completions",
-      secret = os.getenv("GPT_KEY")
+      secret = os.getenv("OPENAI_API_KEY")
     }
   },
   whisper = {
@@ -600,82 +582,94 @@ local function keymapOptions(desc)
 end
 
 -- Chat commands
-vim.keymap.set({"n", "i"}, "<Leader>GC", "<cmd>GpChatNew vsplit<cr>", keymapOptions("New Chat"))
-vim.keymap.set({"n", "i"}, "<Leader>GT", "<cmd>GpChatToggle vsplit<cr>", keymapOptions("Toggle Chat"))
+vim.keymap.set({"n", "i"}, "<Leader>Gc", "<cmd>GpChatNew vsplit<cr>", keymapOptions("New Chat"))
+vim.keymap.set({"n", "i"}, "<Leader>Gt", "<cmd>GpChatToggle vsplit<cr>", keymapOptions("Toggle Chat"))
 
-vim.keymap.set({"n", "i"}, "<Leader>GA", "<cmd>GpAppend<cr>", keymapOptions("Append (after)"))
-vim.keymap.set({"n", "i"}, "<Leader>GX", "<cmd>GpContext<cr>", keymapOptions("Toggle Context"))
+vim.keymap.set({"n", "i"}, "<Leader>Ga", "<cmd>GpAppend<cr>", keymapOptions("Append (after)"))
+vim.keymap.set({"n", "i"}, "<Leader>Gx", "<cmd>GpContext<cr>", keymapOptions("Toggle Context"))
 
 
-vim.keymap.set({"n", "v"}, "<Leader>GI", ":<C-u>'<,'>GpImplement<cr>", keymapOptions("Implement selection"))
-vim.keymap.set({"n", "v"}, "<Leader>GR", ":<C-u>'<,'>GpRewrite<cr>", keymapOptions("Visual rewrite"))
-vim.keymap.set({"n", "v"}, "<Leader>GX", ":<C-u>'<,'>GpContext<cr>", keymapOptions("Visual GpContext"))
+vim.keymap.set({"n", "v"}, "<Leader>Gi", ":<C-u>'<,'>GpImplement<cr>", keymapOptions("Implement selection"))
+vim.keymap.set({"n", "v"}, "<Leader>Gr", ":<C-u>'<,'>GpRewrite<cr>", keymapOptions("Visual rewrite"))
+vim.keymap.set({"n", "v"}, "<Leader>Gx", ":<C-u>'<,'>GpContext<cr>", keymapOptions("Visual GpContext"))
 
 -- clues
-local miniclue = require('mini.clue')
-miniclue.setup({
+-- Hacky but works, otherwise it's not initialized properly
+local which_config = {
+  ---@type false | "classic" | "modern" | "helix"
+  preset = "modern",
+  delay = function(ctx)
+    return ctx.plugin and 0 or 300
+  end,
+  filter = function(mapping)
+    return true
+  end,
+  spec = {},
+  notify = true,
   triggers = {
-    -- Leader triggers
-    { mode = 'n', keys = '<Leader>' },
-    { mode = 'x', keys = '<Leader>' },
-
-    -- Built-in completion
-    { mode = 'i', keys = '<C-x>' },
-
-    -- `g` key
-    { mode = 'n', keys = 'g' },
-    { mode = 'x', keys = 'g' },
-
-    -- Marks
-    { mode = 'n', keys = "'" },
-    { mode = 'n', keys = '`' },
-    { mode = 'x', keys = "'" },
-    { mode = 'x', keys = '`' },
-
-    -- Registers
-    { mode = 'n', keys = '"' },
-    { mode = 'x', keys = '"' },
-    { mode = 'i', keys = '<C-r>' },
-    { mode = 'c', keys = '<C-r>' },
-
-    -- Window commands
-    { mode = 'n', keys = '<C-w>' },
-
-    -- `z` key
-    { mode = 'n', keys = 'z' },
-    { mode = 'x', keys = 'z' },
+    { "<auto>", mode = "nxso" },
   },
-
-  clues = {
-    -- Enhance this by adding descriptions for <Leader> mapping groups
-    miniclue.gen_clues.builtin_completion(),
-    miniclue.gen_clues.g(),
-    miniclue.gen_clues.marks(),
-    miniclue.gen_clues.registers(),
-    miniclue.gen_clues.windows(),
-    miniclue.gen_clues.z(),
-  },
-  window = {
-    config = {
-      anchor = 'SW',
-      width = 120,
-      col = (vim.o.columns - 120) / 2,
-      border = 'rounded',
-      row = 'auto',
-      style = 'minimal',
+  defer = function(ctx)
+    return ctx.mode == "V" or ctx.mode == "<C-V>"
+  end,
+  plugins = {
+    marks = true, -- shows a list of your marks on ' and `
+    registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
+    spelling = {
+      enabled = true, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
+      suggestions = 20, -- how many suggestions should be shown in the list?
     },
-
-    delay = 500,
-
-    -- Keys to scroll inside the clue window
-    scroll_down = '<C-d>',
-    scroll_up = '<C-u>',
+    presets = {
+      operators = true, -- adds help for operators like d, y, ...
+      motions = true, -- adds help for motions
+      text_objects = true, -- help for text objects triggered after entering an operator
+      windows = true, -- default bindings on <c-w>
+      nav = true, -- misc bindings to work with windows
+      z = true, -- bindings for folds, spelling and others prefixed with z
+      g = true, -- bindings for prefixed with g
+    },
   },
-})
+  win = {
+    no_overlap = true,
+    border = "rounded",
+    padding = { 1, 2 }, -- extra window padding [top/bottom, right/left]
+    title = true,
+    title_pos = "left",
+    zindex = 1000,
+    bo = {},
+    wo = {
+      winblend = 20,
+    },
+  },
+  layout = {
+    width = { min = 20 }, -- min and max width of the columns
+    spacing = 3, -- spacing between columns
+  },
+  icons = {
+    breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
+    separator = "➜", -- symbol used between a key and it's label
+    group = "+", -- symbol prepended to a group
+    ellipsis = "…",
+    mappings = false,
+    rules = false,
+    colors = true,
+    keys = {
+    },
+  },
+  show_help = true, -- show a help message in the command line for using WhichKey
+  show_keys = true, -- show the currently pressed key and its label as a message in the command line
+}
+-- Hack but works for first init
+(vim.uv or vim.loop).new_timer():start(
+  200,
+  0,
+  vim.schedule_wrap(function()
+    require("which-key").setup(which_config)
+  end)
+)
 
 EOF
 endif
-autocmd User WhichKey call which_key#register('<Space>', "g:which_key_map")
 
 " Ale
 let g:ale_lint_on_text_changed = 'never'
@@ -712,17 +706,21 @@ let g:ale_fixers = {
 \   'rust': ['rustfmt'],
 \}
 
-" ALE Hotkeys
-nnoremap <Leader>n :ALENext<CR>
-nnoremap <Leader>r :ALERename<CR>
-nnoremap <Leader>f :ALEFix<CR>
-nnoremap <Leader>gd :ALEGoToDefinition<CR>
-nnoremap <Leader>gi :ALEGoToImplementation<CR>
-nnoremap <Leader>gt :ALEGoToTypeDefinition<CR>
-nnoremap <Leader>ai :ALEImport<CR>
-nnoremap <Leader>F :ALEFindReferences<CR>
-nnoremap m :ALEHover<CR>
-nnoremap K :ALEDocumentation<CR>
+if has('nvim')
+lua << EOF
+-- ALE key mappings
+vim.api.nvim_set_keymap('n', '<Leader>n', ':ALENext<CR>', { noremap = true, desc = 'Go to next ALE issue' })
+vim.api.nvim_set_keymap('n', '<Leader>r', ':ALERename<CR>', { noremap = true, desc = 'Rename symbol using ALE' })
+vim.api.nvim_set_keymap('n', '<Leader>f', ':ALEFix<CR>', { noremap = true, desc = 'Apply ALE fix to the issue' })
+vim.api.nvim_set_keymap('n', '<Leader>gd', ':ALEGoToDefinition<CR>', { noremap = true, desc = 'Go to definition using ALE' })
+vim.api.nvim_set_keymap('n', '<Leader>gi', ':ALEGoToImplementation<CR>', { noremap = true, desc = 'Go to implementation using ALE' })
+vim.api.nvim_set_keymap('n', '<Leader>gt', ':ALEGoToTypeDefinition<CR>', { noremap = true, desc = 'Go to type definition using ALE' })
+vim.api.nvim_set_keymap('n', '<Leader>ai', ':ALEImport<CR>', { noremap = true, desc = 'Import using ALE' })
+vim.api.nvim_set_keymap('n', '<Leader>F', ':ALEFindReferences<CR>', { noremap = true, desc = 'Find references using ALE' })
+vim.api.nvim_set_keymap('n', 'm', ':ALEHover<CR>', { noremap = true, desc = 'Show ALE hover information' })
+vim.api.nvim_set_keymap('n', 'K', ':ALEDocumentation<CR>', { noremap = true, desc = 'Show ALE documentation' })
+EOF
+endif
 
 highlight ALEError ctermbg=none cterm=underline
 highlight ALEWarning ctermbg=none cterm=underline
