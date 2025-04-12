@@ -15,7 +15,7 @@ Pin-Priority: 1001' | sudo tee /etc/apt/preferences.d/mozilla-firefox
 
         # Basic software
         sudo apt update
-        sudo apt install zsh ripgrep pwgen ncal neovim tmux lm-sensors tldr cmake curl easy-rsa fonts-hack-ttf \
+        sudo apt install zsh ripgrep pwgen ncal tmux lm-sensors tldr cmake curl easy-rsa fonts-hack-ttf \
             gcc git jq nodejs npm ranger suckless-tools tmuxinator whois wmctrl xclip xdotool yarnpkg
 
         # Clean-up snap firefox
@@ -25,6 +25,9 @@ Pin-Priority: 1001' | sudo tee /etc/apt/preferences.d/mozilla-firefox
         if whiptail --yesno "Install GUI stuff?" 10 60 ;then
             sudo apt install firefox thunderbird thunderbird-locale-en-us thunderbird-locale-ru chromium-browser
         fi
+
+        ## Add neovim install later
+        ## deb: https://github.com/neovim/neovim-releases/releases/download/v0.11.0/nvim-linux-x86_64.deb
     fi
 fi
 # CentOS dev KVM specific
@@ -34,7 +37,7 @@ if grep -q ID=centos /etc/os-release; then
     fi
 
     mkdir -p "$HOME/.local/bin"
-    wget https://github.com/neovim/neovim/releases/download/v0.8.3/nvim.appimage --output-document="$HOME/.local/bin/nvim"
+    wget https://github.com/neovim/neovim/releases/download/v0.11.0/nvim.appimage --output-document="$HOME/.local/bin/nvim"
     chmod +x "$HOME/.local/bin/nvim"
 fi
 

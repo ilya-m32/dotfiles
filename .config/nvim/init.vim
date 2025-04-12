@@ -37,7 +37,6 @@ call plug#begin()
   Plug 'christoomey/vim-tmux-navigator'
   Plug 'jiangmiao/auto-pairs'
   Plug 'tpope/vim-commentary'
-  " Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-sleuth'
   Plug 'wesQ3/vim-windowswap'
@@ -45,14 +44,10 @@ call plug#begin()
   " Visuals
   Plug 'mhinz/vim-startify'
   Plug 'chriskempson/base16-vim'
-  Plug 'RRethy/nvim-base16'
 
   " Key plugins
   Plug 'w0rp/ale', {}
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
-
-  " Webdev
-  " Plug 'othree/html5.vim'
 
   " Domain specific
   Plug 'stevearc/vim-arduino', { 'for': 'arduino' }
@@ -80,7 +75,6 @@ call plug#begin()
 
     " text editing
     Plug 'gbprod/yanky.nvim'
-    " Plug 'Wansmer/treesj'
     Plug 'kylechui/nvim-surround'
 
     " Global search & replace
@@ -677,9 +671,9 @@ let g:ale_lint_on_enter = 1
 let g:ale_completion_enabled = 1
 let g:ale_linters = {
   \ 'markdown': [''],
-  \ 'javascript': ['eslint'],
+  \ 'javascript': ['eslint', 'biome'],
   \ 'jsx': ['eslint'],
-  \ 'typescript': ['eslint', 'tsserver'],
+  \ 'typescript': ['eslint', 'tsserver', 'biome'],
   \ 'python': ['flake8'],
   \ 'perl': ['perl-critic'],
   \ 'cpp': ['clangd'],
@@ -696,7 +690,7 @@ let g:ale_virtualtext_cursor = 'disabled'
 let g:ale_use_neovim_diagnostics_api = 0
 
 let g:ale_set_signs = 1
-let g:ale_js_fixes = ['prettier', 'eslint']
+let g:ale_js_fixes = ['biome', 'prettier', 'eslint']
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': g:ale_js_fixes,
