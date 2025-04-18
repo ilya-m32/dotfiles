@@ -26,7 +26,7 @@ call plug#begin()
   Plug 'wesQ3/vim-windowswap'
 
   " Visuals
-  Plug 'mhinz/vim-startify'
+  " Plug 'mhinz/vim-startify'
   Plug 'chriskempson/base16-vim'
 
   " Key plugins

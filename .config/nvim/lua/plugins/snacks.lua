@@ -1,7 +1,9 @@
 local char = "¦"
 
--- Think better here?
-vim.api.nvim_set_hl(0, 'Conceal', {ctermfg=239, fg='#525252'})
+-- Ported from indentLine
+
+local conceal_highlight = vim.o.background == "light" and {ctermfg=249, fg="Grey70"} or {ctermfg=239, fg="Grey30"}
+vim.api.nvim_set_hl(0, 'Conceal', conceal_highlight)
 
 local snacks = require('snacks')
 
@@ -35,7 +37,33 @@ snacks.setup({
     },
   },
   picker = {
+    -- Explicitly disabled in favor of fzf-lua
     enabled = false
+  },
+  dashboard = {
+    enabled = true,
+    formats = {
+      key = function(item)
+        return { { "[", hl = "special" }, { item.key, hl = "key" }, { "]", hl = "special" } }
+      end,
+    },
+    sections = {
+      {
+        section = "terminal",
+        cmd = "if command -v fortune >/dev/null 2>&1 && command -v cowsay >/dev/null 2>&1; then fortune -s | cowsay; else exit 0; fi",
+        hl = "header",
+        padding = 1,
+        indent = 8
+      },
+      { title = "MRU", padding = 1 },
+      { section = "recent_files", limit = 8, padding = 1 },
+      { title = "MRU ", file = vim.fn.fnamemodify(".", ":~"), padding = 1 },
+      { section = "recent_files", cwd = true, limit = 8, padding = 1 },
+      { title = "Sessions", padding = 1 },
+      { section = "projects", padding = 1 },
+      { title = "Bookmarks", padding = 1 },
+      { section = "keys" },
+    },
   },
   input = {},
   styles = {
@@ -52,7 +80,7 @@ snacks.setup({
       width = 40,
 
       wo = {
-        winhighlight = "NormalFloat:FzfLuaNormal,FloatBorder:FzfLuaBorder,FloatTitle:FzfLuaTitle",
+        -- winhighlight = "NormalFloat:FzfLuaNormal,FloatBorder:FzfLuaBorder,FloatTitle:SnacksInputTitle",
         winblend = 10,
         wrap = true,
       },
@@ -76,3 +104,11 @@ snacks.setup({
     }
   }
 })
+
+-- Over-link highlight groups
+vim.api.nvim_set_hl(0, 'SnacksInputTitle', {link = 'FzfLuaTitle'})
+vim.api.nvim_set_hl(0, 'SnacksInputBorder', {link = 'FzfLuaBorder'})
+vim.api.nvim_set_hl(0, 'SnacksInputNormal', {link = 'FzfLuaNormal'})
+vim.api.nvim_set_hl(0, 'SnacksDashboardNormal', {link = 'FzfLuaNormal'})
+vim.api.nvim_set_hl(0, 'Special', {link = 'MoreMsg'})
+vim.api.nvim_set_hl(0, 'Title', {link = 'FzfLuaTitle'})
