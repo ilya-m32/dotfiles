@@ -3,8 +3,9 @@ local char = "¦"
 -- Think better here?
 vim.api.nvim_set_hl(0, 'Conceal', {ctermfg=239, fg='#525252'})
 
-require('snacks').setup({
-  input = { enabled = true },
+local snacks = require('snacks')
+
+snacks.setup({
   indent = {
     indent = {
       priority = 1,
@@ -35,5 +36,43 @@ require('snacks').setup({
   },
   picker = {
     enabled = false
+  },
+  input = {},
+  styles = {
+    input = {
+      backdrop = false,
+      position = "float",
+      border = "rounded",
+      title_pos = "center",
+      -- relative = "editor",
+      noautocmd = true,
+      relative = "cursor",
+
+      height = 1,
+      width = 40,
+
+      wo = {
+        winhighlight = "NormalFloat:FzfLuaNormal,FloatBorder:FzfLuaBorder,FloatTitle:FzfLuaTitle",
+        winblend = 10,
+        wrap = true,
+      },
+      bo = {
+        filetype = "snacks_input",
+        buftype = "prompt",
+      },
+      b = {
+        completion = true,
+      },
+      keys = {
+        n_esc = { "<esc>", { "cmp_close", "cancel" }, mode = "n", expr = true },
+        i_esc = { "<esc>", { "cmp_close", "stopinsert" }, mode = "i", expr = true },
+        i_cr = { "<cr>", { "cmp_accept", "confirm" }, mode = { "i", "n" }, expr = true },
+        i_tab = { "<tab>", { "cmp_select_next", "cmp" }, mode = "i", expr = true },
+        i_ctrl_w = { "<c-w>", "<c-s-w>", mode = "i", expr = true },
+        i_up = { "<up>", { "hist_up" }, mode = { "i", "n" } },
+        i_down = { "<down>", { "hist_down" }, mode = { "i", "n" } },
+        q = "cancel",
+      },
+    }
   }
 })
