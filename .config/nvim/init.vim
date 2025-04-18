@@ -16,7 +16,7 @@ endif
 " ======================
 call plug#begin()
   " Universal basic
-  Plug 'Yggdroot/indentLine'
+  " Plug 'Yggdroot/indentLine'
   Plug 'airblade/vim-rooter'
   Plug 'christoomey/vim-tmux-navigator'
   Plug 'jiangmiao/auto-pairs'
@@ -46,12 +46,12 @@ call plug#begin()
 
     " Commonly used functions
     Plug 'nvim-lua/plenary.nvim'
+    Plug 'folke/snacks.nvim'
 
     " Navigation
     Plug 'nvim-tree/nvim-tree.lua'
 
     " visuals
-    Plug 'stevearc/dressing.nvim'
     Plug 'nvim-tree/nvim-web-devicons'
 
     " line
@@ -123,7 +123,7 @@ if has('nvim')
 lua << EOF
 require('plugins/treesitter')
 require('plugins/lualine')
-require('plugins/dressing')
+require('plugins/snacks')
 require('plugins/yanky')
 require('plugins/nvim-tree')
 require('plugins/fzf-lua')
