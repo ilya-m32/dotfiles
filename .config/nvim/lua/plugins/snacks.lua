@@ -113,5 +113,7 @@ vim.api.nvim_set_hl(0, 'SnacksInputTitle', {link = 'FzfLuaTitle'})
 vim.api.nvim_set_hl(0, 'SnacksInputBorder', {link = 'FzfLuaBorder'})
 vim.api.nvim_set_hl(0, 'SnacksInputNormal', {link = 'FzfLuaNormal'})
 vim.api.nvim_set_hl(0, 'SnacksDashboardNormal', {link = 'FzfLuaNormal'})
-vim.api.nvim_set_hl(0, 'Special', {link = 'SpecialChar'})
-vim.api.nvim_set_hl(0, 'Title', {link = 'FzfLuaTitle'})
+
+-- For dashboard
+-- vim.api.nvim_set_hl(0, 'Special', {link = 'SpecialChar'})
+-- vim.api.nvim_set_hl(0, 'Title', {link = 'FzfLuaTitle'})

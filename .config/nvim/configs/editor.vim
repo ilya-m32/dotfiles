@@ -121,11 +121,6 @@ set splitright
 set path+=.,src
 set suffixesadd+=.js,.jsx
 
-" Required because of Yggdroot/indentLine
-let g:vim_json_conceal=0
-let g:markdown_syntax_conceal=0
-
-
 " ======================
 " ======= Crutches & stuff
 " ======================
