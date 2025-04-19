@@ -16,6 +16,7 @@ snacks.setup({
       only_scope = false, -- only show indent guides of the scope
       only_current = false, -- only show indent guides in the current window
       hl = "Conceal", ---@type string|string[] hl groups for indent guides
+      skip_root_level = true
     },
     animate = {
       enabled = vim.fn.has("nvim-0.10") == 1,
@@ -34,6 +35,7 @@ snacks.setup({
       underline = false, -- underline the start of the scope
       only_current = false, -- only show scope in the current window
       hl = "Comment", ---@type string|string[] hl group for scopes
+      skip_root_level = true
     },
   },
   picker = {
@@ -102,7 +104,8 @@ snacks.setup({
         q = "cancel",
       },
     }
-  }
+  },
+  bigfile = {}
 })
 
 -- Over-link highlight groups
@@ -110,5 +113,5 @@ vim.api.nvim_set_hl(0, 'SnacksInputTitle', {link = 'FzfLuaTitle'})
 vim.api.nvim_set_hl(0, 'SnacksInputBorder', {link = 'FzfLuaBorder'})
 vim.api.nvim_set_hl(0, 'SnacksInputNormal', {link = 'FzfLuaNormal'})
 vim.api.nvim_set_hl(0, 'SnacksDashboardNormal', {link = 'FzfLuaNormal'})
-vim.api.nvim_set_hl(0, 'Special', {link = 'MoreMsg'})
+vim.api.nvim_set_hl(0, 'Special', {link = 'SpecialChar'})
 vim.api.nvim_set_hl(0, 'Title', {link = 'FzfLuaTitle'})
