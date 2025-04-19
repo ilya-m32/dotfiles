@@ -46,7 +46,9 @@ call plug#begin()
 
     " Commonly used functions
     Plug 'nvim-lua/plenary.nvim'
-    Plug 'folke/snacks.nvim'
+    " Using my fork until https://github.com/folke/snacks.nvim/issues/1537 is resolved
+    "Plug 'folke/snacks.nvim'
+    Plug 'ilya-m32/snacks.nvim'
 
     " Navigation
     Plug 'nvim-tree/nvim-tree.lua'
