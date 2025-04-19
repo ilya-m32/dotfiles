@@ -11,4 +11,3 @@ gsettings set org.gnome.desktop.wm.keybindings toggle-fullscreen "[\"<Shift><Con
 gsettings set org.gnome.desktop.wm.keybindings toggle-maximized "[\"<Control><Alt>f\"]"
 gsettings set org.gnome.desktop.wm.keybindings close "[\"<Primary><Alt>q\"]"
 gsettings set org.gnome.shell.keybindings toggle-application-view "[\"<Alt>r\"]"
-

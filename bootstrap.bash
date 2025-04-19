@@ -16,7 +16,8 @@ Pin-Priority: 1001' | sudo tee /etc/apt/preferences.d/mozilla-firefox
         # Basic software
         sudo apt update
         sudo apt install zsh ripgrep pwgen ncal tmux lm-sensors tldr cmake curl easy-rsa fonts-hack-ttf \
-            gcc git jq nodejs npm ranger suckless-tools tmuxinator whois wmctrl xclip xdotool yarnpkg
+            gcc git jq nodejs npm ranger suckless-tools tmuxinator whois wmctrl xclip xdotool yarnpkg \
+            cowsay fortunes
 
         # Clean-up snap firefox
         sudo snap remove firefox
