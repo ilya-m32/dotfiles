@@ -43,7 +43,7 @@ snacks.setup({
     enabled = false
   },
   dashboard = {
-    enabled = true,
+    enabled = false,
     formats = {
       key = function(item)
         return { { "[", hl = "special" }, { item.key, hl = "key" }, { "]", hl = "special" } }

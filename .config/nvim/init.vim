@@ -16,7 +16,6 @@ endif
 " ======================
 call plug#begin()
   " Universal basic
-  " Plug 'Yggdroot/indentLine'
   Plug 'airblade/vim-rooter'
   Plug 'christoomey/vim-tmux-navigator'
   Plug 'jiangmiao/auto-pairs'
@@ -26,7 +25,7 @@ call plug#begin()
   Plug 'wesQ3/vim-windowswap'
 
   " Visuals
-  " Plug 'mhinz/vim-startify'
+  Plug 'mhinz/vim-startify'
   Plug 'chriskempson/base16-vim'
 
   " Key plugins
