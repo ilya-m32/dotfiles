@@ -1,6 +1,6 @@
 function! s:source_config(path)
- let l:full_path = join([has('nvim') ? stdpath('config') : '~/.config/nvim', a:path], '/')
- execute "source " . l:full_path
+  let l:full_path = join([has('nvim') ? stdpath('config') : '~/.config/nvim', a:path], '/')
+  execute "source " . l:full_path
 endfunction
 
 call s:source_config('configs/editor.vim')
@@ -123,6 +123,7 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 if has('nvim')
 lua << EOF
 require('plugins/treesitter')
+require('plugins/ale')
 require('plugins/lualine')
 require('plugins/snacks')
 require('plugins/yanky')
@@ -137,9 +138,6 @@ require("plugins/session-manager")
 vim.api.nvim_set_keymap('n', '<leader>R', ':Spectre<CR>', { noremap = true, silent = true })
 EOF
 endif
-
-" Ale
-call s:source_config('configs/ale.vim')
 
 " Arduino
 autocmd!

@@ -65,7 +65,7 @@ require("nvim-tree").setup({
   },
 })
 
-function tree_open_find_safe(args)
+local tree_open_find_safe = function()
   local currentPath = vim.api.nvim_buf_get_name(0)
 
   if (currentPath == "" or vim.fn.filereadable(currentPath) == 0) then
