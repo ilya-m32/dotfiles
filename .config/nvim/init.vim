@@ -29,7 +29,8 @@ call plug#begin()
   Plug 'chriskempson/base16-vim'
 
   " Key plugins
-  Plug 'w0rp/ale', {}
+  " Plug 'w0rp/ale', {}
+  Plug 'ilya-m32/ale', {}
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
 
   " Domain specific
