@@ -112,6 +112,7 @@ set synmaxcol=900
 " Number lines
 set number relativenumber
 set numberwidth=2
+set signcolumn=number
 
 " Splits
 set splitbelow

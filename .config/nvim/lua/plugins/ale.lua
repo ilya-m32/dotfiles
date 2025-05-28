@@ -3,22 +3,24 @@ local border = {'╭', '─', '╮', '│', '╯', '─', '╰', '│'}
 
 -- Not ALE but for it
 vim.diagnostic.config({
-    signs = {
-        text = {
-            [vim.diagnostic.severity.ERROR] = '>',
-            [vim.diagnostic.severity.WARN] = '-',
-        },
-        linehl = {
-        },
-        numhl = {
-            [vim.diagnostic.severity.ERROR] = 'ErrorMsg',
-            [vim.diagnostic.severity.WARN] = 'WarningMsg',
-        },
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = '>',
+      [vim.diagnostic.severity.WARN] = '-',
     },
+    linehl = {},
+    numhl = {
+      [vim.diagnostic.severity.ERROR] = 'ErrorMsg',
+      [vim.diagnostic.severity.WARN] = 'WarningMsg',
+    },
+  },
   float = {
     border = border
   }
 })
+vim.keymap.set("n", "<leader>k", function()
+  vim.diagnostic.open_float(nil, { focusable = false, source = "if_many" })
+end, { desc = "Diagnostic float" })
 
 local ale_js_linters = { 'eslint', 'tsserver', 'biome' }
 local ale_js_fixes = { 'biome', 'prettier', 'eslint' }
@@ -58,38 +60,38 @@ require("ale").setup({
 })
 
 require('ale.util').aleFileSelectAsync = function (params)
-    local item_list = params.item_list
-    local options = params.options or {}
+  local item_list = params.item_list
+  local options = params.options or {}
 
-    local format_item = function(item)
-        return string.format("%s:%s", item.filename, item.line, item.match)
-    end
+  local format_item = function(item)
+    return string.format("%s:%s", item.filename, item.line, item.match)
+  end
 
-    local fzf_items = {}
-    local items_map = {}
-    for _, item in ipairs(item_list) do
-      local formatted = format_item(item)
-      items_map[formatted] = item
-      table.insert(fzf_items, formatted)
-    end
+  local fzf_items = {}
+  local items_map = {}
+  for _, item in ipairs(item_list) do
+    local formatted = format_item(item)
+    items_map[formatted] = item
+    table.insert(fzf_items, formatted)
+  end
 
-    require('fzf-lua').fzf_exec(
-      fzf_items,
-      {
-        prompt = options.prompt or 'Select one file: ',
-        previewer = 'builtin',
-        actions = {
-          -- Define the action upon selection
-          ['default'] = function(selected)
-            local selected_item = items_map[selected[1]]
-            if selected_item then
-              vim.api.nvim_command('edit ' .. selected_item.filename)
-              vim.api.nvim_win_set_cursor(0, {selected_item.line, selected_item.column})
-            end
+  require('fzf-lua').fzf_exec(
+    fzf_items,
+    {
+      prompt = options.prompt or 'Select one file: ',
+      previewer = 'builtin',
+      actions = {
+        -- Define the action upon selection
+        ['default'] = function(selected)
+          local selected_item = items_map[selected[1]]
+          if selected_item then
+            vim.api.nvim_command('edit ' .. selected_item.filename)
+            vim.api.nvim_win_set_cursor(0, {selected_item.line, selected_item.column})
           end
-        }
+        end
       }
-    )
+    }
+  )
 end
 
 -- ALE key mappings
