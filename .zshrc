@@ -76,15 +76,17 @@ fi
 export ZSH=$HOME/.oh-my-zsh
 
 plugins=(
+  aws
   colorize
   docker
   fancy-ctrl-z
   git
   gnu-utils
   perl
-  ripgrep
   rsync
+  rust
   tmux
+  ubuntu
   vi-mode
   yarn
 )

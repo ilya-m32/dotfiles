@@ -27,6 +27,10 @@ Pin-Priority: 1001' | sudo tee /etc/apt/preferences.d/mozilla-firefox
             sudo apt install firefox thunderbird thunderbird-locale-en-us thunderbird-locale-ru chromium-browser
         fi
 
+
+        ## Install debget
+        ## https://github.com/wimpysworld/deb-get/releases/download/0.4.5/deb-get_0.4.5-1_all.deb
+
         ## Add neovim install later
         ## deb: https://github.com/neovim/neovim-releases/releases/download/v0.11.0/nvim-linux-x86_64.deb
     fi
