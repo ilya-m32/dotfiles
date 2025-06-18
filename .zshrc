@@ -9,7 +9,7 @@ HOME_CITY="Amsterdam"
 export LANG=en_US.UTF-8
 
 export EDITOR="vim"
-export TERM=screen-256color
+export TERM=tmux-256color
 export KEYTIMEOUT=1
 
 # zsh settings

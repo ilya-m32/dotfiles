@@ -9,7 +9,7 @@ fzf_lua.setup{
       git_icons = true,
       file_icons = true,
       color_icons = true,
-      show_cwd_header = true,
+      cwd_header = true,
     },
   }
 }

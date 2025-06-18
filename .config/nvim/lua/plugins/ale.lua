@@ -38,6 +38,8 @@ require("ale").setup({
   use_neovim_diagnostics_api = 1,
   use_neovim_lsp_api = 1,
 
+  -- use_global_executables = 1,
+
   virtualtext_cursor = "disabled",
   fixers = {
     ['*'] = {'remove_trailing_lines', 'trim_whitespace'},
@@ -45,6 +47,7 @@ require("ale").setup({
     typescript = ale_js_fixes,
     typescriptreact = ale_js_fixes,
     cpp = {'clang-format'},
+    python = {'black'},
     rust = {'rustfmt'},
   },
   linters = {
@@ -52,7 +55,7 @@ require("ale").setup({
     javascript = ale_js_linters,
     jsx = ale_js_linters,
     typescript = ale_js_linters,
-    python = {'flake8'},
+    python = {'flake8', 'pylsp'},
     perl = {'perl-critic'},
     cpp = {'clangd'},
     rust = {'analyzer'},
@@ -123,7 +126,9 @@ vim.api.nvim_set_keymap('n', 'K', ':ALEDocumentation<CR>', { noremap = true, des
 vim.api.nvim_set_hl(0, 'FloatTitle', {link='FzfLuaTitle'})
 vim.api.nvim_set_hl(0, 'NormalFloat', {link='FzfLuaNormal'})
 vim.api.nvim_set_hl(0, 'FloatBorder', {link='FzfLuaBorder'})
-vim.api.nvim_set_hl(0, 'PmenuSel', {link='TabLineSel'})
+
+vim.api.nvim_set_hl(0, 'Pmenu', {link='NormalFloat'})
+vim.api.nvim_set_hl(0, 'PmenuSel', {link='FloatShadow'})
 
 if vim.env.BVIM then
   vim.g.ale_pattern_options = {

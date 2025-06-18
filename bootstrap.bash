@@ -2,6 +2,8 @@
 
 mkdir -p ~/.config
 
+VIMVERSION="0.11.1"
+
 # Ubuntu-specific
 if grep -q ID=ubuntu /etc/os-release; then
     if whiptail --yesno "Ubuntu detected. Install Ubuntu-specific apps?" 20 80 ;then
@@ -16,8 +18,8 @@ Pin-Priority: 1001' | sudo tee /etc/apt/preferences.d/mozilla-firefox
         # Basic software
         sudo apt update
         sudo apt install zsh ripgrep pwgen ncal tmux lm-sensors tldr cmake curl easy-rsa fonts-hack-ttf \
-            gcc git jq nodejs npm ranger suckless-tools tmuxinator whois wmctrl xclip xdotool yarnpkg \
-            cowsay fortunes
+            gcc git jq nodejs npm ranger suckless-tools whois wmctrl xclip xdotool \
+            cowsay fortunes inotify-tools
 
         # Clean-up snap firefox
         sudo snap remove firefox
@@ -32,7 +34,7 @@ Pin-Priority: 1001' | sudo tee /etc/apt/preferences.d/mozilla-firefox
         ## https://github.com/wimpysworld/deb-get/releases/download/0.4.5/deb-get_0.4.5-1_all.deb
 
         ## Add neovim install later
-        ## deb: https://github.com/neovim/neovim-releases/releases/download/v0.11.0/nvim-linux-x86_64.deb
+        ## deb: https://github.com/neovim/neovim-releases/releases/download/v$VIMVERSION/nvim-linux-x86_64.deb
     fi
 fi
 # CentOS dev KVM specific
@@ -42,7 +44,7 @@ if grep -q ID=centos /etc/os-release; then
     fi
 
     mkdir -p "$HOME/.local/bin"
-    wget https://github.com/neovim/neovim/releases/download/v0.11.0/nvim.appimage --output-document="$HOME/.local/bin/nvim"
+    wget https://github.com/neovim/neovim/releases/download/v$VIMVERSION/nvim.appimage --output-document="$HOME/.local/bin/nvim"
     chmod +x "$HOME/.local/bin/nvim"
 fi
 
