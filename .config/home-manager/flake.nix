@@ -8,6 +8,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # nix-system-graphics = {
+    #   url = "github:soupglasses/nix-system-graphics";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
   };
 
   outputs =
@@ -23,9 +27,20 @@
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
         modules = [ ./home.nix ];
-
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
       };
+      # systemConfigs.default = system-manager.lib.makeSystemConfig {
+      #   modules = [
+      #     nix-system-graphics.systemModules.default
+      #     ({
+      #       config = {
+      #         nixpkgs.hostPlatform = "x86_64-linux";
+      #         system-manager.allowAnyDistro = true;
+      #         system-graphics.enable = true;
+      #       };
+      #     })
+      #   ];
+      # };
     };
 }

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -17,10 +17,49 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = [
-    pkgs.neofetch
-    pkgs.fastfetch
-    pkgs.nodejs_24
+  home.packages = with pkgs; [
+    # CLI
+    fastfetch
+    aichat
+    ncspot
+    fzf
+    oh-my-zsh
+    xh
+
+    # Main tools
+    neovim
+    nodejs_24
+    aider-chat
+
+    # Nix
+    nixfmt-rfc-style
+
+    # Lua
+    luajitPackages.lua-lsp
+
+    # Python
+    python313
+    python313Packages.python-lsp-server
+
+    # Rust
+    rustc
+    rustfmt
+    rust-analyzer
+
+    # Misc
+    nerd-fonts.hack
+
+    # GUI
+    telegram-desktop
+    thunderbird-esr-bin
+    spot
+    ungoogled-chromium
+    # signal-desktop wait for upgrading
+
+    # Non-free GUI
+    protonmail-bridge-gui
+    # pkgs.zoom-us
+
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -71,9 +110,31 @@
   #  /etc/profiles/per-user/ilya/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    EDITOR = "neovim";
+    EDITOR = "nvim";
+    BROWSER = "firefox";
+    TERMINAL = "alacritty";
   };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  # Neovim
+  programs.neovim = {
+    viAlias = true;
+    vimAlias = true;
+    extraConfig = lib.fileContents "${config.home.homeDirectory}/.config/nvim/init.vim";
+  };
+
+  programs.ncspot = {
+    enable = true;
+    settings = {
+      shuffle = true;
+      gapless = true;
+      backend = "pulseaudio";
+    };
+  };
+
+  targets.genericLinux.enable = true;
+  xdg.mime.enable = true;
+  xdg.systemDirs.data = [ "${config.home.homeDirectory}/.nix-profile/share/applications" ];
 }
