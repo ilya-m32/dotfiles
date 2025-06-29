@@ -18,18 +18,32 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    # CLI
-    fastfetch
-    aichat
-    ncspot
-    fzf
-    oh-my-zsh
-    xh
-
     # Main tools
+    alacritty-graphics
     neovim
     nodejs_24
     aider-chat
+    aichat
+
+    # CLI
+    fastfetch
+    ncspot
+    playerctl
+    fzf
+    oh-my-zsh
+    xh
+    nvimpager
+    dust # better du
+    duf # better df
+    fd
+    ripgrep
+    jq
+    yq
+    cheat # your cheats for your commands
+    tldr
+    doggo # better dig
+    tinty # Theme
+    timg # Images
 
     # Nix
     nixfmt-rfc-style
@@ -81,6 +95,17 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
+    # "./.config/nvim" = {
+    #   source = ./config/nvim;
+    #   recursive = true;
+    # };
+    # ln -sf $PWD/.config/nvim/init.vim $HOME/.config/nvim/init.vim
+    # ln -sf $PWD/.zshrc $HOME/.zshrc
+
+    # mkdir -p $HOME/.config/tmux
+    # ln -sf $PWD/.config/tmux/tmux.conf $HOME/.config/tmux/tmux.conf
+    # ln -sf $PWD/.config/tmux/ilya-m.tmuxtheme $HOME/.config/tmux/ilya-m.tmuxtheme
+
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
@@ -113,6 +138,7 @@
     EDITOR = "nvim";
     BROWSER = "firefox";
     TERMINAL = "alacritty";
+    PAGER = "nvimpager";
   };
 
   # Let Home Manager install and manage itself.
@@ -131,6 +157,9 @@
       shuffle = true;
       gapless = true;
       backend = "pulseaudio";
+      use_nerdfont = true;
+      notify = true;
+      olibrary_tab = ["tracks" "albums" "artists" "playlists" "browse"];
     };
   };
 

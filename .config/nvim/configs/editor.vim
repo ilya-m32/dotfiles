@@ -137,28 +137,6 @@ endif
 
 " Clipboard fallback
 if has('nvim') && !empty($TMUX) && executable('tmux')
- " let g:clipboard = {
- "    \   'name': 'xclipOnWayland',
- "    \   'copy': {
- "    \      '+': ['xclip', '-quiet', '-i', '-selection', 'clipboard'],
- "    \      '*': ['xclip', '-quiet', '-i', '-selection', 'primary'],
- "    \    },
- "    \   'paste': {
- "    \      '+': ['xclip', '-o', '-selection', 'clipboard'],
- "    \      '*': ['xclip', '-o', '-selection', 'primary'],
- "    \   },
- "    \   'cache_enabled': 1,
- "    \ }
-let g:clipboard = {
-    \   'name': 'macos+tmux',
-    \   'copy': {
-    \      '+': ['tmux', 'load-buffer', '-'],
-    \      '*': ['tmux', 'load-buffer', '-'],
-    \    },
-    \   'paste': {
-    \      '+': ['tmux', 'save-buffer', '-'],
-    \      '*': ['tmux', 'save-buffer', '-'],
-    \   },
-    \   'cache_enabled': 0,
-    \ }
+  let g:clipboard = 'xclip'
+  set clipboard=unnamed,unnamedplus
 endif

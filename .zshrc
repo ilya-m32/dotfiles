@@ -8,7 +8,7 @@ HOME_CITY="Amsterdam"
 # System settings
 export LANG=en_US.UTF-8
 
-export EDITOR="vim"
+export EDITOR="nvim"
 export TERM=tmux-256color
 export KEYTIMEOUT=1
 
@@ -28,8 +28,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="false"
 HIST_STAMPS="dd/mm/yyyy"
 
 # Paths
-export PATH=$HOME/.local/bin:$PATH
-export PATH="$PATH:$HOME/.npm-global/bin"
+export PATH="$HOME/.npm-global/bin:$HOME/.local/bin:$PATH"
 
 # ssh
 export SSH_KEY_PATH="~/.ssh/id_rsa"
@@ -97,11 +96,8 @@ source $ZSH/oh-my-zsh.sh
 # ======= base16-themes
 # ======================
 
-BASE16_SHELL="$HOME/.config/base16-shell/"
-[ -n "$PS1" ] && \
-  [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
-  eval "$("$BASE16_SHELL/profile_helper.sh")"
-
-base16_tomorrow-night
+if command -v tinty >/dev/null 2>&1; then
+  tinty apply base16-tomorrow-night
+fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

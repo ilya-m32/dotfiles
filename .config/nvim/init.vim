@@ -26,12 +26,13 @@ call plug#begin()
 
   " Visuals
   Plug 'mhinz/vim-startify'
-  Plug 'chriskempson/base16-vim'
+  Plug 'tinted-theming/tinted-vim'
 
   " Key plugins
   " Plug 'w0rp/ale', {}
   Plug 'ilya-m32/ale', {}
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
+  "Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
+  Plug 'junegunn/fzf'
 
   " Domain specific
   Plug 'stevearc/vim-arduino', { 'for': 'arduino' }
@@ -105,10 +106,7 @@ endif
 " ======= Plugin options
 " ======================
 " Base 16 theme
-if filereadable(expand("~/.vimrc_background"))
-  let base16colorspace=256
-  source ~/.vimrc_background
-endif
+colorscheme base16-tomorrow-night
 
 " Rooter
 let g:rooter_silent_chdir = 0
@@ -154,18 +152,8 @@ syntax on
 
 " Clipboard fallback
 if has('nvim') && !empty($WAYLAND_DISPLAY) && executable('xclip')
- let g:clipboard = {
-    \   'name': 'xclipOnWayland',
-    \   'copy': {
-    \      '+': ['xclip', '-quiet', '-i', '-selection', 'clipboard'],
-    \      '*': ['xclip', '-quiet', '-i', '-selection', 'primary'],
-    \    },
-    \   'paste': {
-    \      '+': ['xclip', '-o', '-selection', 'clipboard'],
-    \      '*': ['xclip', '-o', '-selection', 'primary'],
-    \   },
-    \   'cache_enabled': 1,
-    \ }
+  set clipboard=unnamed,unnamedplus
+  let g:clipboard = 'xclip'
 endif
 
 " Spell checking in neovim

@@ -58,13 +58,13 @@ else
 fi
 
 # Shell
-echo -e "\nInstalling base16 shell themes..."
-if [[ ! -d "$HOME/.config/base16-shell" ]]
-then
-    git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell
-else
-    echo "Base16 shell themes are already installed"
-fi
+# echo -e "\nInstalling base16 shell themes..."
+# if [[ ! -d "$HOME/.config/base16-shell" ]]
+# then
+#     git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell
+# else
+#     echo "Base16 shell themes are already installed"
+# fi
 
 echo -e "\nInstalling oh-my-zsh..."
 if [[ ! -d "$HOME/.oh-my-zsh" ]]
