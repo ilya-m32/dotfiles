@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, guiEnabled, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -19,7 +19,6 @@
   # environment.
   home.packages = with pkgs; [
     # Main tools
-    alacritty-graphics
     neovim
     nodejs_24
     aider-chat
@@ -62,34 +61,17 @@
 
     # Misc
     nerd-fonts.hack
-
+  ] ++ lib.optionals guiEnabled [
     # GUI
+    alacritty-graphics
     telegram-desktop
     thunderbird-esr-bin
     spot
     ungoogled-chromium
-    # signal-desktop wait for upgrading
-
-    # Non-free GUI
+    xournalpp
+    # signal-desktop-bin # wait for upgrading
     protonmail-bridge-gui
-    # pkgs.zoom-us
-
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
-
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
+    # zoom-us
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
