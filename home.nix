@@ -20,7 +20,7 @@
   home.packages = with pkgs; [
     # Main tools
     neovim
-    nodejs_24
+    nodejs_22
     aider-chat
     aichat
 
@@ -44,7 +44,11 @@
     tinty # Theme
     timg # Images
 
+    # Web
+    typescript-language-server
+
     # Nix
+    nil
     nixfmt-rfc-style
 
     # Lua
@@ -69,7 +73,7 @@
     spot
     ungoogled-chromium
     xournalpp
-    # signal-desktop-bin # wait for upgrading
+    signal-desktop # wait for upgrading
     protonmail-bridge-gui
     # zoom-us
   ];
