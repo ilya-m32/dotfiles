@@ -62,6 +62,7 @@
     rustc
     rustfmt
     rust-analyzer
+    cargo
 
     # Misc
     nerd-fonts.hack

@@ -84,6 +84,11 @@ call plug#begin()
     " == Experimental ==
     Plug 'robitx/gp.nvim'
     Plug 'folke/which-key.nvim'
+
+    " == Experimental - 2 ==
+    Plug 'neovim/nvim-lspconfig'
+    Plug 'saghen/blink.cmp'
+
   endif
 
   if $BVIM
@@ -133,19 +138,44 @@ require("plugins/gitsigns")
 require("plugins/gp")
 require("plugins/which-key")
 require("plugins/session-manager")
+-- experimental
+require("plugins/blink")
 --Spectre
 vim.api.nvim_set_keymap('n', '<leader>R', ':Spectre<CR>', { noremap = true, silent = true })
+
+local DEFAULT_SEVERITY = { min = vim.diagnostic.severity.WARN }
+vim.diagnostic.config({
+  signs = {
+    severity = DEFAULT_SEVERITY,
+    text = {
+      [vim.diagnostic.severity.ERROR] = '>',
+      [vim.diagnostic.severity.WARN] = '-',
+    },
+    linehl = {},
+    numhl = {
+      [vim.diagnostic.severity.ERROR] = 'ErrorMsg',
+      [vim.diagnostic.severity.WARN] = 'WarningMsg',
+    },
+  },
+  underline = {
+    severity = DEFAULT_SEVERITY
+  },
+  jump = {
+    severity = DEFAULT_SEVERITY
+  },
+  float = {
+    border = 'rounded'
+  },
+})
+
+vim.api.nvim_set_hl(0, 'FloatTitle', { link = 'FzfLuaTitle' })
+vim.api.nvim_set_hl(0, 'NormalFloat', { link = 'FzfLuaNormal' })
+vim.api.nvim_set_hl(0, 'FloatBorder', { link = 'FzfLuaBorder' })
+
+vim.api.nvim_set_hl(0, 'Pmenu', { link = 'NormalFloat' })
+vim.api.nvim_set_hl(0, 'PmenuSel', { link = 'FloatShadow' })
 EOF
 endif
-
-" Arduino
-autocmd!
-au BufNewFile,BufRead *.ino set filetype=cpp
-augroup FiletypeGroup
-
-  autocmd!
-  let b:arduino_dir = '/usr/share/arduino'
-augroup END
 
 " Legacy syntax highlight, after theme is loaded
 syntax on
@@ -155,7 +185,3 @@ if has('nvim') && !empty($WAYLAND_DISPLAY) && executable('xclip')
   set clipboard=unnamed,unnamedplus
   let g:clipboard = 'xclip'
 endif
-
-" Spell checking in neovim
-" set spelllang=en_us
-" set spell

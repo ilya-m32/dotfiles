@@ -13,7 +13,7 @@
     };
   };
 
-  outputs = { self, flake-utils, nixpkgs, system-manager, nix-system-graphics }: {
+  outputs = { self, system-manager, nix-system-graphics }: {
     systemConfigs.default = system-manager.lib.makeSystemConfig {
       modules = [
         nix-system-graphics.systemModules.default
