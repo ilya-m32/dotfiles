@@ -1,6 +1,3 @@
-local ale_border = {'│', '─', '╭', '╮', '╯', '╰', '│', '─'}
-local border = {'╭', '─', '╮', '│', '╯', '─', '╰', '│'}
-
 -- Not ALE but for it
 vim.diagnostic.config({
   signs = {
@@ -15,7 +12,7 @@ vim.diagnostic.config({
     },
   },
   float = {
-    border = border
+    border = 'rounded'
   }
 })
 vim.keymap.set("n", "<leader>k", function()
@@ -30,7 +27,7 @@ require("ale").setup({
   lint_on_enter = 1,
   completion_enabled = 1,
 
-  floating_window_border = ale_border,
+  floating_window_border = {'│', '─', '╭', '╮', '╯', '╰', '│', '─'},
   floating_preview = 1,
 
   linters_explicit = 0,
