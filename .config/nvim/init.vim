@@ -29,9 +29,7 @@ call plug#begin()
   Plug 'tinted-theming/tinted-vim'
 
   " Key plugins
-  " Plug 'w0rp/ale', {}
-  Plug 'ilya-m32/ale', {}
-  "Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
+  Plug 'w0rp/ale', {}
   Plug 'junegunn/fzf'
 
   " Domain specific
@@ -135,11 +133,11 @@ require('plugins/nvim-tree')
 require('plugins/fzf-lua')
 require("nvim-surround").setup({})
 require("plugins/gitsigns")
-require("plugins/gp")
 require("plugins/which-key")
 require("plugins/session-manager")
 -- experimental
 require("plugins/blink")
+require("plugins/gp")
 --Spectre
 vim.api.nvim_set_keymap('n', '<leader>R', ':Spectre<CR>', { noremap = true, silent = true })
 
