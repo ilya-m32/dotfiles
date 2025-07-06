@@ -83,6 +83,7 @@ call plug#begin()
     Plug 'robitx/gp.nvim'
     Plug 'folke/which-key.nvim'
 
+
     " == Experimental - 2 ==
     Plug 'neovim/nvim-lspconfig'
     Plug 'saghen/blink.cmp'

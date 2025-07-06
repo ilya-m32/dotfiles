@@ -25,24 +25,25 @@
     aichat
 
     # CLI
-    fastfetch
-    ncspot
-    playerctl
-    fzf
-    oh-my-zsh
-    xh
-    nvimpager
-    dust # better du
-    duf # better df
-    fd
-    ripgrep
-    jq
-    yq
     cheat # your cheats for your commands
-    tldr
+    delta # better diff
     doggo # better dig
-    tinty # Theme
+    duf # better df
+    dust # better du
+    fastfetch
+    fd
+    fzf
+    jq
+    ncspot
+    nvimpager
+    oh-my-zsh
+    playerctl
+    ripgrep
     timg # Images
+    tinty # Theme
+    tldr
+    xh
+    yq
 
     # Web
     typescript-language-server
