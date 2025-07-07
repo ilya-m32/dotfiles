@@ -50,8 +50,9 @@ require('blink.cmp').setup({
 
 vim.keymap.set({ 'n' }, '<Leader>r', vim.lsp.buf.rename,
   { noremap = true, silent = true, desc = 'Rename symbol using LSP' })
-vim.keymap.set({ 'n' }, '<Leader>a', vim.lsp.buf.code_action, { noremap = true, desc = 'Code actions' })
-vim.keymap.set({ 'n' }, 'm', vim.lsp.buf.hover, { noremap = true, desc = 'Show hover information' })
+vim.keymap.set({ 'n', 'v' }, '<Leader>c', vim.lsp.buf.code_action, { noremap = true, desc = 'Code actions' })
+vim.keymap.set({ 'n' }, 'm', function() vim.lsp.buf.hover({ focusable = false, border = 'rounded' }) end, { noremap = true, desc = 'Show hover information' })
+vim.keymap.set({ 'n' }, 'K', function() vim.lsp.buf.hover({ focus = true, border = 'rounded' }) end, { noremap = true, desc = 'Show hover information' })
 vim.keymap.set({ 'n' }, '<Leader>gd', vim.lsp.buf.definition, { noremap = true, desc = 'Go to definition' })
 vim.keymap.set({ 'n' }, '<Leader>gi', vim.lsp.buf.implementation,
   { noremap = true, desc = 'Go to implementation using ALE' })
