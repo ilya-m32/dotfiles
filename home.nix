@@ -1,5 +1,14 @@
 { config, pkgs, lib, guiEnabled, ... }:
 
+let
+  sharedEnvVars = {
+    EDITOR = "nvim";
+    BROWSER = "firefox";
+    TERMINAL = "alacritty";
+    PAGER = "nvimpager";
+    ELECTRON_OZONE_PLATFORM_HINT = "auto";
+  };
+in
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -97,13 +106,8 @@
     # ln -sf $PWD/.config/tmux/ilya-m.tmuxtheme $HOME/.config/tmux/ilya-m.tmuxtheme
   };
 
-  home.sessionVariables = {
-    EDITOR = "nvim";
-    BROWSER = "firefox";
-    TERMINAL = "alacritty";
-    PAGER = "nvimpager";
-    ELECTRON_OZONE_PLATFORM_HINT = "auto";
-  };
+  home.sessionVariables = sharedEnvVars;
+  systemd.user.sessionVariables = sharedEnvVars;
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

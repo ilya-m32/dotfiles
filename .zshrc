@@ -41,6 +41,10 @@ if [ -f ~/.tokens ]; then
   source ~/.tokens
 fi
 
+if [ -f ~/.profile ]; then
+  source ~/.profile
+fi
+
 # Purely local profile (separate from ~/.profile)
 if [ -f ~/.local_profile ]; then
   source ~/.local_profile
