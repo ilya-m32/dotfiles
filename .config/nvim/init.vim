@@ -173,9 +173,3 @@ endif
 
 " Legacy syntax highlight, after theme is loaded
 syntax on
-
-" Clipboard fallback
-if has('nvim') && !empty($WAYLAND_DISPLAY) && executable('xclip')
-  " set clipboard=unnamed,unnamedplus
-  " let g:clipboard = 'xclip'
-endif

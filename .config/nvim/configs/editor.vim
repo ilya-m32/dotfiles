@@ -138,5 +138,5 @@ endif
 " Clipboard fallback
 if has('nvim') && !empty($TMUX) && executable('tmux')
   let g:clipboard = 'xclip'
-  set clipboard=unnamed,unnamedplus
+  set clipboard=unnamed
 endif
