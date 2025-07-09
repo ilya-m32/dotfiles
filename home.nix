@@ -1,4 +1,4 @@
-{ config, pkgs, lib, guiEnabled, ... }:
+{ config, pkgs, lib, guiEnabled, user, ... }:
 
 let
   sharedEnvVars = {
@@ -12,8 +12,8 @@ in
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = "ilya";
-  home.homeDirectory = "/home/ilya";
+  home.username = user;
+  home.homeDirectory = "/home/${user}";
 
   targets.genericLinux.enable = true;
 
@@ -127,7 +127,8 @@ in
       backend = "pulseaudio";
       use_nerdfont = true;
       notify = true;
-      olibrary_tab = ["tracks" "albums" "artists" "playlists" "browse"];
+      initial_screen = "cover";
+      library_tabs = ["albums" "artists" "playlists" "browse"];
     };
   };
 

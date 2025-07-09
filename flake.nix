@@ -15,13 +15,15 @@
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
       guiEnabled = true;
+      user = "ilya";
     in
     {
-      homeConfigurations."ilya" = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations.${user} = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
         extraSpecialArgs = {
           guiEnabled = guiEnabled;
+          user = user;
         };
 
         modules = [ ./home.nix ];

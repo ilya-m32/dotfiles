@@ -136,7 +136,7 @@ if has('linux')
 endif
 
 " Clipboard fallback
-if has('nvim') && !empty($TMUX) && executable('tmux')
+if has('nvim') && executable('xclip')
   let g:clipboard = 'xclip'
   set clipboard=""
 endif
