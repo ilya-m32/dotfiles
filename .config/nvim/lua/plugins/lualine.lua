@@ -1,5 +1,7 @@
 -- Lualine
 
+vim.o.showtabline = 0
+
 require'lualine'.setup {
   options = {
     icons_enabled = false,

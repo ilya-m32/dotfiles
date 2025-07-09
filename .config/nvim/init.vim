@@ -6,11 +6,6 @@ endfunction
 call s:source_config('configs/editor.vim')
 call s:source_config('configs/keymaps.vim')
 
-if has('nvim')
-  " Lualine does this in buffers
-  set showtabline=0
-endif
-
 " ======================
 " ======= Plugins
 " ======================
@@ -181,6 +176,6 @@ syntax on
 
 " Clipboard fallback
 if has('nvim') && !empty($WAYLAND_DISPLAY) && executable('xclip')
-  set clipboard=unnamed,unnamedplus
-  let g:clipboard = 'xclip'
+  " set clipboard=unnamed,unnamedplus
+  " let g:clipboard = 'xclip'
 endif
