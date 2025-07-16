@@ -55,9 +55,11 @@ in
     tldr
     xh
     yq
+    zx
 
     # Web
     typescript-language-server
+    nodePackages.svgo
 
     # Nix
     nil
