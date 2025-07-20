@@ -88,10 +88,9 @@ in
     alacritty-graphics
     telegram-desktop
     thunderbird-esr-bin
-    spot
     ungoogled-chromium
     xournalpp
-    signal-desktop # wait for upgrading
+    signal-desktop
     protonmail-bridge-gui
     # zoom-us
   ];
