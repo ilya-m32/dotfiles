@@ -32,10 +32,9 @@ in
     # Main tools
     neovim
     nodejs_22
-    aider-chat
-    aichat
 
     # CLI
+    btop # better htop
     cheat # your cheats for your commands
     delta # better diff
     doggo # better dig
@@ -56,6 +55,10 @@ in
     xh
     yq
     zx
+
+    # LLMs
+    aider-chat
+    aichat
 
     # Web
     typescript-language-server
