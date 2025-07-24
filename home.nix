@@ -5,7 +5,7 @@ let
     EDITOR = "nvim";
     BROWSER = "firefox";
     TERMINAL = "alacritty";
-    PAGER = "nvimpager";
+    PAGER = "moar";
     ELECTRON_OZONE_PLATFORM_HINT = "auto";
   };
 in
@@ -45,13 +45,13 @@ in
     fzf
     jq
     ncspot
-    nvimpager
+    moar # better more
     oh-my-zsh
     playerctl
     ripgrep
     timg # Images
     tinty # Theme
-    tldr
+    tealdeer # better tldr
     xh
     yq
     zx
