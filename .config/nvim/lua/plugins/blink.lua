@@ -71,7 +71,14 @@ vim.keymap.set('n', '[d', function() vim.diagnostic.jump({count= -1, float = tru
 vim.keymap.set('n', ']d', function() vim.diagnostic.jump({count= 1,float = true}) end,
   { noremap = true, desc = 'Go to next issue with float' })
 
-local LSP_SERVERS = {'lua_ls', 'nil_ls', 'ts_ls'};
+local LSP_SERVERS = {
+  'clangd',
+  'lua_ls',
+  'nil_ls',
+  'pylsp',
+  'rust_analyzer',
+  'ts_ls',
+};
 
 vim.lsp.config('*', {
   capabilities = {
