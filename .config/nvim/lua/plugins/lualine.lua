@@ -4,7 +4,7 @@ vim.o.showtabline = 0
 
 require'lualine'.setup {
   options = {
-    icons_enabled = false,
+    icons_enabled = true,
     theme = 'auto',
     component_separators = { left = '|', right = '|'},
     section_separators = { left = '', right = ''},
@@ -23,17 +23,17 @@ require'lualine'.setup {
         sources = { 'nvim_diagnostic', 'ale' },
         always_visible = true,   -- Show diagnostics even if there are none.
       },
-      {
-        'buffers',
-        show_filename_only = true,
-        show_modified_status = true,
-        mode = 4,
-        max_length = 60,
+      -- {
+      --   'buffers',
+      --   show_filename_only = true,
+      --   show_modified_status = true,
+      --   mode = 4,
+      --   max_length = 60,
 
-        buffers_color = {
-          active = 'MoreMsg',
-        },
-      }
+      --   buffers_color = {
+      --     active = 'MoreMsg',
+      --   },
+      -- }
     },
     lualine_x = {
       {
@@ -51,7 +51,9 @@ require'lualine'.setup {
       'selectioncount'
     },
     lualine_y = {
-      'encoding', 'fileformat', 'filetype',
+      -- 'encoding',
+      -- 'fileformat',
+      'filetype',
     },
     lualine_z = {'location'}
   },

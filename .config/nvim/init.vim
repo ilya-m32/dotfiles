@@ -25,21 +25,23 @@ call plug#begin()
 
   " Key plugins
   Plug 'w0rp/ale', {}
-  Plug 'junegunn/fzf'
 
   " Domain specific
   Plug 'stevearc/vim-arduino', { 'for': 'arduino' }
 
   " NVIM-only
   if has('nvim')
+    " Commonly used functions
+    Plug 'nvim-lua/plenary.nvim'
+    " LSP configs
+    Plug 'neovim/nvim-lspconfig'
+
     " Tresitter integration
     Plug 'nvim-treesitter/nvim-treesitter'
 
     " fzf-integration
     Plug 'ibhagwan/fzf-lua'
 
-    " Commonly used functions
-    Plug 'nvim-lua/plenary.nvim'
     " Using my fork until https://github.com/folke/snacks.nvim/issues/1537 is resolved
     "Plug 'folke/snacks.nvim'
     Plug 'ilya-m32/snacks.nvim'
@@ -57,32 +59,16 @@ call plug#begin()
     Plug 'gbprod/yanky.nvim'
     Plug 'kylechui/nvim-surround'
 
-    " Global search & replace
-    Plug 'nvim-pack/nvim-spectre'
-
-    " Session
-    Plug 'Shatur/neovim-session-manager'
-
-    " Markdown previewer
-    Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-
-    Plug 'lewis6991/gitsigns.nvim'
-
-    " Diff
-    Plug 'sindrets/diffview.nvim'
-
-    " Use tmux tabline
-    Plug 'vimpostor/vim-tpipeline'
-
-    " == Experimental ==
-    Plug 'robitx/gp.nvim'
-    Plug 'folke/which-key.nvim'
-
-
-    " == Experimental - 2 ==
-    Plug 'neovim/nvim-lspconfig'
-    Plug 'saghen/blink.cmp'
-
+    Plug 'nvim-pack/nvim-spectre' " Global search & replace
+    Plug 'Shatur/neovim-session-manager' " Session
+    " Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+    Plug 'lewis6991/gitsigns.nvim' " Git
+    Plug 'sindrets/diffview.nvim' " Diff
+    Plug 'vimpostor/vim-tpipeline' " Use tmux tabline
+    Plug 'robitx/gp.nvim' " LLM integration
+    Plug 'folke/which-key.nvim' " Nice hints
+    Plug 'xzbdmw/colorful-menu.nvim' " Nice autocomplete colors
+    Plug 'saghen/blink.cmp' " Autocomplete
   endif
 
   if $BVIM
