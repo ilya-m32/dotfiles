@@ -5,7 +5,7 @@ let
     EDITOR = "nvim";
     BROWSER = "firefox";
     TERMINAL = "alacritty";
-    PAGER = "moar";
+    PAGER = "less";
     ELECTRON_OZONE_PLATFORM_HINT = "auto";
   };
 in
@@ -45,7 +45,6 @@ in
     fzf
     jq
     ncspot
-    moar # better more
     oh-my-zsh
     playerctl
     ripgrep
