@@ -100,7 +100,6 @@ plugins=(
   perl
   rsync
   rust
-  tmux
   ubuntu
   vi-mode
   yarn

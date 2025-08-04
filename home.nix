@@ -55,6 +55,10 @@ in
     yq
     zx
 
+    # tmux stuff
+    tmux
+    tmux-sessionizer
+
     # LLMs
     aider-chat
     aichat
