@@ -7,8 +7,8 @@ require('blink.cmp').setup({
 
   keymap = {
     preset = 'default',
-    ['<Tab>'] = { 'select_and_accept' },
   },
+
   cmdline = {
     enabled = true,
     keymap = {
