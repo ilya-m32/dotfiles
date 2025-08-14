@@ -120,6 +120,7 @@ require("plugins/session-manager")
 -- experimental
 require("plugins/blink")
 require("plugins/gp")
+require('plugins/bookmarks')
 --Spectre
 vim.api.nvim_set_keymap('n', '<leader>R', ':Spectre<CR>', { noremap = true, silent = true })
 
@@ -154,6 +155,7 @@ vim.api.nvim_set_hl(0, 'FloatBorder', { link = 'FzfLuaBorder' })
 
 vim.api.nvim_set_hl(0, 'Pmenu', { link = 'NormalFloat' })
 vim.api.nvim_set_hl(0, 'PmenuSel', { link = 'FloatShadow' })
+
 EOF
 endif
 

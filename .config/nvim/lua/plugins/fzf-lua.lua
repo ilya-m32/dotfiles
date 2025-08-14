@@ -11,6 +11,9 @@ fzf_lua.setup{
       color_icons = true,
       cwd_header = true,
     },
+  },
+  marks = {
+    marks = '%d'
   }
 }
 fzf_lua.register_ui_select()

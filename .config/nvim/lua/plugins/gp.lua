@@ -84,4 +84,5 @@ vim.keymap.set({"n", "i"}, "<Leader>Gx", "<cmd>GpContext<cr>", keymapOptions("To
 
 vim.keymap.set({"n", "v"}, "<Leader>Gi", ":<C-u>'<,'>GpImplement<cr>", keymapOptions("Implement selection"))
 vim.keymap.set({"n", "v"}, "<Leader>Gr", ":<C-u>'<,'>GpRewrite<cr>", keymapOptions("Visual rewrite"))
+vim.keymap.set({"n", "v"}, "<Leader>Gc", ":<C-u>'<,'>GpRewrite<cr>", keymapOptions("Visual rewrite"))
 vim.keymap.set({"n", "v"}, "<Leader>Gx", ":<C-u>'<,'>GpContext<cr>", keymapOptions("Visual GpContext"))
