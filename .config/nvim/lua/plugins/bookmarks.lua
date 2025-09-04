@@ -18,7 +18,7 @@ end
 local vim = vim
 
 -- Add Marks ------------------------------------------------------------------
-vim.keymap.set("n", "m", function()
+vim.keymap.set("n", "M", function()
   local mark = vim.fn.getcharstr()
   local char = mark2char(mark)
   vim.cmd("mark " .. char)

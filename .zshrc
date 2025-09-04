@@ -9,6 +9,7 @@ HOME_CITY="Amsterdam"
 export LANG=en_US.UTF-8
 
 export EDITOR="nvim"
+export PAGER="less"
 export TERM=tmux-256color
 export KEYTIMEOUT=1
 
