@@ -10,4 +10,4 @@ require('session_manager').setup({
   autosave_only_in_session = false,
   max_path_length = 120,
 })
-vim.keymap.set('n', '<Leader>s', ':SessionManager load_session<CR>')
+vim.keymap.set('n', '<Leader>S', ':SessionManager load_session<CR>')
