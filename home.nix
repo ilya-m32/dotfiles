@@ -67,7 +67,7 @@ in
 
     # Web
     typescript-language-server
-    # vscode-eslint-language-server
+    vscode-langservers-extracted
     nodePackages.svgo
 
     # Nix
@@ -107,8 +107,6 @@ in
     signal-desktop
     protonmail-bridge-gui
     psst # native spotify
-    # pipeline # native youtube
-    # yt-dlp # for pipeline
     # zoom-us
   ];
 
