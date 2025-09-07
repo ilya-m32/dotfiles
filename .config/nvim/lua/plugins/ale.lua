@@ -12,7 +12,7 @@ require("ale").setup({
   floating_window_border = { '│', '─', '╭', '╮', '╯', '╰', '│', '─' },
   floating_preview = 1,
 
-  linters_explicit = 0,
+  linters_explicit = 1,
   hover_to_floating_preview = 1,
   use_neovim_diagnostics_api = 1,
   use_neovim_lsp_api = 1,

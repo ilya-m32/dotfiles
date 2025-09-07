@@ -96,24 +96,3 @@ vim.keymap.set('n', '[d', function() vim.diagnostic.jump({count= -1, float = tru
   { noremap = true, desc = 'Go to previous issue' })
 vim.keymap.set('n', ']d', function() vim.diagnostic.jump({count= 1,float = true}) end,
   { noremap = true, desc = 'Go to next issue with float' })
-
-local LSP_SERVERS = {
-  'clangd',
-  'lua_ls',
-  'nil_ls',
-  'pylsp',
-  'rust_analyzer',
-  'ts_ls',
-};
-
-vim.lsp.config('*', {
-  capabilities = {
-    textDocument = {
-      publishDiagnostics = {
-        severity_limit = "Warning",
-      }
-    }
-  },
-})
-
-vim.lsp.enable(LSP_SERVERS)

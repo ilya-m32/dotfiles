@@ -67,6 +67,7 @@ in
 
     # Web
     typescript-language-server
+    # vscode-eslint-language-server
     nodePackages.svgo
 
     # Nix
@@ -80,11 +81,19 @@ in
     python313
     python313Packages.python-lsp-server
 
+    # java
+    zulu24
+    jdt-language-server
+    maven
+
     # Rust
     rustc
     rustfmt
     rust-analyzer
     cargo
+
+    # bash
+    bash-language-server
 
     # Misc
     nerd-fonts.hack

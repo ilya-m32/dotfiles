@@ -23,8 +23,7 @@ call plug#begin()
   Plug 'mhinz/vim-startify'
   Plug 'tinted-theming/tinted-vim'
 
-  " Key plugins
-  Plug 'w0rp/ale', {}
+  " Plug 'w0rp/ale', {}
 
   " Domain specific
   Plug 'stevearc/vim-arduino', { 'for': 'arduino' }
@@ -33,27 +32,27 @@ call plug#begin()
   if has('nvim')
     " Commonly used functions
     Plug 'nvim-lua/plenary.nvim'
+
     " LSP configs
     Plug 'neovim/nvim-lspconfig'
+
+    " Java exp - after LSP config
+    Plug 'mfussenegger/nvim-jdtls'
 
     " Tresitter integration
     Plug 'nvim-treesitter/nvim-treesitter'
 
-    " fzf-integration
+    " fzf-integration and picker
     Plug 'ibhagwan/fzf-lua'
 
     " Using my fork until https://github.com/folke/snacks.nvim/issues/1537 is resolved
     "Plug 'folke/snacks.nvim'
     Plug 'ilya-m32/snacks.nvim'
 
-    " Navigation
-    Plug 'nvim-tree/nvim-tree.lua'
+    Plug 'nvim-tree/nvim-web-devicons' " visuals
 
-    " visuals
-    Plug 'nvim-tree/nvim-web-devicons'
-
-    " line
-    Plug 'nvim-lualine/lualine.nvim'
+    Plug 'nvim-tree/nvim-tree.lua' " navigation
+    Plug 'nvim-lualine/lualine.nvim' " topline
 
     " text editing
     Plug 'gbprod/yanky.nvim'
@@ -61,7 +60,6 @@ call plug#begin()
 
     Plug 'nvim-pack/nvim-spectre' " Global search & replace
     Plug 'Shatur/neovim-session-manager' " Session
-    " Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
     Plug 'lewis6991/gitsigns.nvim' " Git
     Plug 'sindrets/diffview.nvim' " Diff
     Plug 'vimpostor/vim-tpipeline' " Use tmux tabline
@@ -106,8 +104,11 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 " ===========
 if has('nvim')
 lua << EOF
+-- base
 require('plugins/treesitter')
-require('plugins/ale')
+require('plugins/lsp')
+--require('plugins/ale')
+-- extras
 require('plugins/lualine')
 require('plugins/snacks')
 require('plugins/yanky')
@@ -117,7 +118,6 @@ require("nvim-surround").setup({})
 require("plugins/gitsigns")
 require("plugins/which-key")
 require("plugins/session-manager")
--- experimental
 require("plugins/blink")
 require("plugins/gp")
 require('plugins/bookmarks')
