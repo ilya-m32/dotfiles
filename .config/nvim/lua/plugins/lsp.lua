@@ -4,6 +4,7 @@ local LSP_SERVERS = {
   'nil_ls',
   'pylsp',
   'rust_analyzer',
+  'bashls',
   -- web world
   'ts_ls',
   'eslint',
