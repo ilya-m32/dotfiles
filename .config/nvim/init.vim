@@ -16,7 +16,7 @@ call plug#begin()
   Plug 'jiangmiao/auto-pairs'
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-repeat'
-  Plug 'tpope/vim-sleuth'
+  " Plug 'tpope/vim-sleuth'
   Plug 'wesQ3/vim-windowswap'
 
   " Visuals
@@ -26,7 +26,7 @@ call plug#begin()
   " Plug 'w0rp/ale', {}
 
   " Domain specific
-  Plug 'stevearc/vim-arduino', { 'for': 'arduino' }
+  " Plug 'stevearc/vim-arduino', { 'for': 'arduino' }
 
   " NVIM-only
   if has('nvim')
@@ -37,7 +37,7 @@ call plug#begin()
     Plug 'neovim/nvim-lspconfig'
 
     " Java exp - after LSP config
-    Plug 'mfussenegger/nvim-jdtls'
+    " Plug 'mfussenegger/nvim-jdtls'
 
     " Tresitter integration
     Plug 'nvim-treesitter/nvim-treesitter'
@@ -95,9 +95,6 @@ colorscheme base16-tomorrow-night
 let g:rooter_silent_chdir = 0
 let g:rooter_resolve_links = 1
 let g:rooter_patterns = ['.git', '*.sln', 'build/env.sh']
-
-" editorconfig
-let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
 " ===========
 " === NVIM-only part

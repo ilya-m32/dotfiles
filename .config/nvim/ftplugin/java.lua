@@ -37,4 +37,4 @@ local config = {
     bundles = {}
   },
 }
-require('jdtls').start_or_attach(config)
+-- require('jdtls').start_or_attach(config)

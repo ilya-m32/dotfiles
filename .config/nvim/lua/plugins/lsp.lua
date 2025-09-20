@@ -7,12 +7,22 @@ local LSP_SERVERS = {
   'bashls',
   -- web world
   'ts_ls',
+  'biome',
   'eslint',
   'jsonls',
   'html'
   -- 'jdtls', - done via special plugin
 };
 
+vim.lsp.config('*', {
+  capabilities = {
+    textDocument = {
+      publishDiagnostics = {
+        severity_limit = "Warning",
+      }
+    }
+  },
+})
 vim.lsp.config('*', {
   capabilities = {
     textDocument = {
@@ -41,7 +51,11 @@ vim.keymap.set("n", "<leader>k", function()
 end, { desc = "Diagnostic float" })
 
 vim.keymap.set({ 'n' }, '<Leader>F', vim.lsp.buf.references, { noremap = true, desc = 'Find references LSP' })
-vim.keymap.set({ 'n' }, '<Leader>f', vim.lsp.buf.format, { noremap = true, desc = 'Apply format fixes' })
+vim.keymap.set({ 'n' }, '<Leader>f', function ()
+  vim.lsp.buf.format({
+    filter = function(client) return client.name ~= "ts_ls" end
+  })
+end, { noremap = true, desc = 'Apply format fixes' })
 
 vim.keymap.set('n', '[d', function() vim.diagnostic.jump({count= -1, float = true}) end,
   { noremap = true, desc = 'Go to previous issue' })

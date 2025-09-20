@@ -68,6 +68,7 @@ in
     # Web
     typescript-language-server
     vscode-langservers-extracted
+    biome
     nodePackages.svgo
 
     # Nix
