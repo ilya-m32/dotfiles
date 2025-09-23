@@ -81,11 +81,12 @@ in
     # Python
     python313
     python313Packages.python-lsp-server
+    uv
 
     # java
-    zulu24
-    jdt-language-server
-    maven
+    # zulu24
+    # jdt-language-server
+    # maven
 
     # Rust
     rustc
