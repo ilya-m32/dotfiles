@@ -93,9 +93,13 @@ in
     rustfmt
     rust-analyzer
     cargo
+    # rustup
 
     # bash
     bash-language-server
+
+    # LSP compatibility
+    efm-langserver
 
     # Misc
     nerd-fonts.hack

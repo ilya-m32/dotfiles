@@ -10,7 +10,8 @@ local LSP_SERVERS = {
   'biome',
   'eslint',
   'jsonls',
-  'html'
+  'html',
+  'efm', -- universal
   -- 'jdtls', - done via special plugin
 };
 
@@ -23,15 +24,10 @@ vim.lsp.config('*', {
     }
   },
 })
-vim.lsp.config('*', {
-  capabilities = {
-    textDocument = {
-      publishDiagnostics = {
-        severity_limit = "Warning",
-      }
-    }
-  },
+vim.lsp.config('efm', {
+  filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'typescript.tsx', 'json' }
 })
+
 
 vim.lsp.enable(LSP_SERVERS)
 

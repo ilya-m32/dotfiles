@@ -16,7 +16,7 @@ call plug#begin()
   Plug 'jiangmiao/auto-pairs'
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-repeat'
-  " Plug 'tpope/vim-sleuth'
+  Plug 'tpope/vim-sleuth'
   Plug 'wesQ3/vim-windowswap'
 
   " Visuals
