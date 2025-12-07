@@ -34,6 +34,7 @@ call plug#begin()
     Plug 'nvim-lua/plenary.nvim'
 
     " LSP configs
+    Plug 'creativenull/efmls-configs-nvim', { 'tag': 'v1.*' }
     Plug 'neovim/nvim-lspconfig'
 
     " Java exp - after LSP config

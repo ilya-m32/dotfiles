@@ -11,7 +11,7 @@ local LSP_SERVERS = {
   'eslint',
   'jsonls',
   'html',
-  'efm', -- universal
+  'efm', -- universal for non-lsp
   -- 'jdtls', - done via special plugin
 };
 
@@ -24,10 +24,31 @@ vim.lsp.config('*', {
     }
   },
 })
-vim.lsp.config('efm', {
-  filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'typescript.tsx', 'json' }
-})
 
+-- ELM
+local prettier = require('efmls-configs.formatters.prettier')
+local languages = {
+  typescript = { prettier },
+  javascript = { prettier }
+}
+
+-- local languages = require('efmls-configs.defaults').languages()
+local efmls_config = {
+  filetypes = vim.tbl_keys(languages),
+  settings = {
+    rootMarkers = { '.git/' },
+    languages = languages,
+  },
+  init_options = {
+    documentFormatting = true,
+    documentRangeFormatting = true,
+  },
+}
+
+vim.lsp.config('efm', vim.tbl_extend('force', efmls_config, {
+  cmd = { 'efm-langserver' },
+}))
+-- ELM end
 
 vim.lsp.enable(LSP_SERVERS)
 
@@ -38,9 +59,9 @@ vim.keymap.set({ 'n' }, 'm', function() vim.lsp.buf.hover({ focusable = false, b
 vim.keymap.set({ 'n' }, 'K', function() vim.lsp.buf.hover({ focus = true, border = 'rounded' }) end, { noremap = true, desc = 'Show hover information' })
 vim.keymap.set({ 'n' }, '<Leader>gd', vim.lsp.buf.definition, { noremap = true, desc = 'Go to definition' })
 vim.keymap.set({ 'n' }, '<Leader>gi', vim.lsp.buf.implementation,
-  { noremap = true, desc = 'Go to implementation using ALE' })
+  { noremap = true, desc = 'Go to implementation' })
 vim.keymap.set({ 'n' }, '<Leader>gt', vim.lsp.buf.type_definition,
-  { noremap = true, desc = 'Go to type definition using ALE' })
+  { noremap = true, desc = 'Go to type definition' })
 
 vim.keymap.set("n", "<leader>k", function()
   vim.diagnostic.open_float(nil, { focusable = false, source = "if_many" })
@@ -49,7 +70,9 @@ end, { desc = "Diagnostic float" })
 vim.keymap.set({ 'n' }, '<Leader>F', vim.lsp.buf.references, { noremap = true, desc = 'Find references LSP' })
 vim.keymap.set({ 'n' }, '<Leader>f', function ()
   vim.lsp.buf.format({
-    filter = function(client) return client.name ~= "ts_ls" end
+    filter = function(client)
+      return client.name ~= "ts_ls"
+    end
   })
 end, { noremap = true, desc = 'Apply format fixes' })
 
