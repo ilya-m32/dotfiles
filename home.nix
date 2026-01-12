@@ -33,7 +33,7 @@ in
   home.packages = with pkgs; [
     # Main tools
     neovim
-    nodejs_22
+    nodejs_24
 
     # CLI
     btop # better htop
@@ -64,6 +64,7 @@ in
     # LLMs
     aider-chat
     aichat
+    opencode
 
     # Web
     typescript-language-server
