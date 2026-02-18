@@ -65,6 +65,7 @@ call plug#begin()
     Plug 'sindrets/diffview.nvim' " Diff
     Plug 'vimpostor/vim-tpipeline' " Use tmux tabline
     Plug 'robitx/gp.nvim' " LLM integration
+    Plug 'nickjvandyke/opencode.nvim' " OpenCode integration
     Plug 'folke/which-key.nvim' " Nice hints
     Plug 'xzbdmw/colorful-menu.nvim' " Nice autocomplete colors
     Plug 'saghen/blink.cmp' " Autocomplete
@@ -117,7 +118,8 @@ require("plugins/gitsigns")
 require("plugins/which-key")
 require("plugins/session-manager")
 require("plugins/blink")
-require("plugins/gp")
+--require("plugins/gp")
+require("plugins/opencode-int")
 require('plugins/bookmarks')
 --Spectre
 vim.api.nvim_set_keymap('n', '<leader>R', ':Spectre<CR>', { noremap = true, silent = true })

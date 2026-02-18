@@ -22,6 +22,12 @@ vim.keymap.set('n', '<C-p>', ':FzfLua git_files<CR>')
 vim.keymap.set('n', '<C-f>', ':FzfLua live_grep_native<CR>')
 vim.keymap.set('v', '<C-f>', '"gy:FzfLua grep_visual<CR>')
 vim.keymap.set('v', 'gs', '"gy:FzfLua grep_visual<CR>')
+
+local function set_gitsigns_qflist()
+  require('gitsigns').setqflist('all')
+  fzf_lua.quickfix()
+end
+vim.keymap.set({'n','v'}, '<leader>a', set_gitsigns_qflist, { noremap = true, silent = true })
 vim.keymap.set({'n','v'}, '<Leader>q', ':FzfLua quickfix<CR>')
 vim.keymap.set({'n','v'}, '<Leader>s', ':FzfLua lsp_document_symbols<CR>')
 vim.keymap.set({'n','v'}, '<Leader>d', ':FzfLua diagnostics_document<CR>')
