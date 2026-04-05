@@ -1,4 +1,4 @@
-{ config, pkgs, lib, guiEnabled, user, ... }:
+{ config, pkgs, lib, guiEnabled, withCorpoStuff, user, ... }:
 
 let
   sharedEnvVars = {
@@ -62,7 +62,6 @@ in
     tmux-sessionizer
 
     # LLMs
-    aider-chat
     aichat
     opencode
 
@@ -70,7 +69,7 @@ in
     typescript-language-server
     vscode-langservers-extracted
     biome
-    nodePackages.svgo
+    svgo
 
     # Nix
     nil
@@ -114,7 +113,9 @@ in
     signal-desktop
     protonmail-bridge-gui
     psst # native spotify
-    # zoom-us
+  ] ++ lib.optionals withCorpoStuff [
+    glab # gitlab
+    jira-cli-go
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

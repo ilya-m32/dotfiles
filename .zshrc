@@ -65,7 +65,6 @@ alias tm='tmux attach || tmux -2 new'
 alias gcnf='git diff --name-only --diff-filter=U'
 alias vi="nvim"
 alias vim="nvim"
-alias pip="pip3"
 
 if [ $OS_TYPE = "Linux" ]; then
   alias o="xdg-open"
@@ -98,7 +97,6 @@ plugins=(
   fancy-ctrl-z
   git
   gnu-utils
-  perl
   rsync
   rust
   ubuntu

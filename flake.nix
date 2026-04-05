@@ -15,6 +15,7 @@
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
       guiEnabled = true;
+      withCorpoStuff = false;
       user = "ilya";
     in
     {
@@ -24,6 +25,7 @@
         extraSpecialArgs = {
           guiEnabled = guiEnabled;
           user = user;
+          withCorpoStuff = withCorpoStuff;
         };
 
         modules = [ ./home.nix ];
