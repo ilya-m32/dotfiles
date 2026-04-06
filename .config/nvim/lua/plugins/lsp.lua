@@ -50,6 +50,24 @@ vim.lsp.config('efm', vim.tbl_extend('force', efmls_config, {
 }))
 -- ELM end
 
+-- Lua: make Neovim runtime/types available and silence `vim` global warnings.
+vim.lsp.config('lua_ls', {
+  settings = {
+    Lua = {
+      runtime = { version = 'LuaJIT' },
+      diagnostics = { globals = { 'vim' } },
+      workspace = {
+        -- Keep indexing focused: Neovim runtime + this config.
+        library = {
+          vim.env.VIMRUNTIME .. '/lua',
+          vim.fn.stdpath('config') .. '/lua',
+        },
+        checkThirdParty = false,
+      },
+    },
+  },
+})
+
 vim.lsp.enable(LSP_SERVERS)
 
 vim.keymap.set({ 'n' }, '<Leader>r', vim.lsp.buf.rename,

@@ -4,17 +4,14 @@
 vim.keymap.set('n', ';', ':', { noremap = true })
 
 -- Auto indent pasted text.
-vim.keymap.set('n', 'p', 'p=`]<C-o>', { noremap = true })
-vim.keymap.set('n', 'P', 'P=`]<C-o>', { noremap = true })
+-- NOTE: `p`/`P` are remapped by yanky.nvim.
 
 -- To the blackhole if not specified to copy
 vim.keymap.set('n', 'x', '"_x', { noremap = true })
 vim.keymap.set('n', 'd', '"_d', { noremap = true })
 vim.keymap.set('n', 'D', '"_D', { noremap = true })
 vim.keymap.set('v', 'd', '"_d', { noremap = true })
-vim.keymap.set('n', '<leader>d', '""d', { noremap = true })
 vim.keymap.set('n', '<leader>D', '""D', { noremap = true })
-vim.keymap.set('v', '<leader>d', '""d', { noremap = true })
 
 -- Hide search results
 vim.keymap.set('n', '<leader>,', '<cmd>noh<cr>', { silent = true, noremap = true })

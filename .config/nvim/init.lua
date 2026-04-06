@@ -62,7 +62,6 @@ vim.pack.add({
   gh('nvim-pack/nvim-spectre'),
   gh('Shatur/neovim-session-manager'),
   gh('lewis6991/gitsigns.nvim'),
-  gh('sindrets/diffview.nvim'),
   gh('vimpostor/vim-tpipeline'),
   gh('robitx/gp.nvim'),
   gh('nickjvandyke/opencode.nvim'),
@@ -81,7 +80,7 @@ if vim.env.BVIM and vim.env.BVIM ~= '' then
   vim.opt.rtp:prepend(vim.env.BVIM)
 end
 
--- Legacy UI tweaks.
+-- Legacy UI tweaks
 vim.api.nvim_set_hl(0, 'MsgArea', { link = 'StatusLineNC' })
 
 -- Theme (provided by tinted-vim).
@@ -90,8 +89,6 @@ vim.cmd.colorscheme('base16-tomorrow-night')
 -- Plugin config
 require('plugins/treesitter')
 require('plugins/lsp')
--- require('plugins/ale')
-
 require('plugins/lualine')
 require('plugins/snacks')
 require('plugins/yanky')
@@ -102,9 +99,7 @@ require('plugins/gitsigns')
 require('plugins/which-key')
 require('plugins/session-manager')
 require('plugins/blink')
--- require('plugins/gp')
 require('plugins/opencode-int')
-require('plugins/bookmarks')
 
 vim.keymap.set('n', '<leader>R', '<cmd>Spectre<cr>', { silent = true })
 

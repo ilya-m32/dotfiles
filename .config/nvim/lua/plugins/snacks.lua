@@ -19,7 +19,7 @@ snacks.setup({
       skip_root_level = true
     },
     animate = {
-      enabled = vim.fn.has("nvim-0.10") == 1,
+      enabled = true,
       style = "out",
       easing = "linear",
       duration = {

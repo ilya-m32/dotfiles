@@ -5,9 +5,6 @@ vim.opt.shell = '/bin/zsh'
 vim.opt.background = 'dark'
 vim.cmd('hi MatchParen cterm=bold ctermbg=none ctermfg=darkred')
 
--- Ensure filetype plugins/indent are enabled.
-vim.cmd('filetype plugin indent on')
-
 vim.opt.timeoutlen = 1000
 vim.opt.ttimeoutlen = 0
 vim.opt.history = 500
@@ -18,8 +15,6 @@ vim.opt.synmaxcol = 900
 -- Cursor style
 vim.opt.guicursor = 'a:ver25-blinkwait150-blinkon200-blinkoff150'
 
-vim.opt.cmdheight = 1
-vim.opt.hidden = true
 vim.opt.wildignore:append({ '.git', '.hg', '.svn', '*.o', '*.aux', '*.png', '*.jpg', '*.pdf' })
 
 vim.opt.ignorecase = true
@@ -42,7 +37,6 @@ vim.opt.smarttab = true
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 
-vim.opt.linebreak = true
 vim.opt.textwidth = 500
 
 vim.opt.autoindent = true

@@ -20,7 +20,7 @@ require'lualine'.setup {
     lualine_c = {
       {
         'diagnostics',
-        sources = { 'nvim_diagnostic', 'ale' },
+        sources = { 'nvim_diagnostic' },
         always_visible = true,   -- Show diagnostics even if there are none.
       },
       -- {
@@ -80,5 +80,5 @@ require'lualine'.setup {
     lualine_z = {}
   },
   tabline = {},
-  extensions = {'nvim-tree', 'fzf', 'fugitive'}
+  extensions = {'nvim-tree'}
 }
