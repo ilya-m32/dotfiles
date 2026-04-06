@@ -115,3 +115,6 @@ if command -v tinty >/dev/null 2>&1; then
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Force the cursor, some TUI apps are annoying
+precmd() { printf '\e[5 q'; }

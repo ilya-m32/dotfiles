@@ -75,10 +75,7 @@ vim.pack.add({
   confirm = true,
 })
 
--- Keep $BVIM behavior: add local runtime dir (not managed by vim.pack).
-if vim.env.BVIM and vim.env.BVIM ~= '' then
-  vim.opt.rtp:prepend(vim.env.BVIM)
-end
+require('config.pack')
 
 -- Legacy UI tweaks
 vim.api.nvim_set_hl(0, 'MsgArea', { link = 'StatusLineNC' })
