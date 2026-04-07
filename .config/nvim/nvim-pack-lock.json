@@ -70,7 +70,7 @@
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
     "snacks.nvim": {
-      "rev": "de713605cda1291cc1959fac417ea95243afde32",
+      "rev": "d49d643f7c72331dc090783049af15f7995a5a87",
       "src": "https://github.com/ilya-m32/snacks.nvim"
     },
     "tinted-vim": {
