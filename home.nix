@@ -1,4 +1,12 @@
-{ config, pkgs, lib, guiEnabled, withCorpoStuff, user, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  guiEnabled,
+  withCorpoStuff,
+  user,
+  ...
+}:
 
 let
   sharedEnvVars = {
@@ -30,93 +38,97 @@ in
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = with pkgs; [
-    # Main tools
-    neovim
-    nodejs_24
+  home.packages =
+    with pkgs;
+    [
+      # Main tools
+      neovim
+      nodejs_24
 
-    # CLI
-    btop # better htop
-    cheat # your cheats for your commands
-    delta # better diff
-    doggo # better dig
-    duf # better df
-    dust # better du
-    fastfetch
-    fd
-    fzf
-    jq
-    ncspot
-    oh-my-zsh
-    playerctl
-    ripgrep
-    timg # Images
-    tinty # Theme
-    tealdeer # better tldr
-    xh
-    yq
-    zx
+      # CLI
+      btop # better htop
+      cheat # your cheats for your commands
+      delta # better diff
+      doggo # better dig
+      duf # better df
+      dust # better du
+      fastfetch
+      fd
+      fzf
+      jq
+      ncspot
+      oh-my-zsh
+      playerctl
+      ripgrep
+      timg # Images
+      tinty # Theme
+      tealdeer # better tldr
+      xh
+      yq
+      zx
 
-    # tmux stuff
-    tmux
-    tmux-sessionizer
+      # tmux stuff
+      tmux
+      tmux-sessionizer
 
-    # LLMs
-    aichat
-    opencode
+      # LLMs
+      aichat
+      opencode
 
-    # Web
-    typescript-language-server
-    vscode-langservers-extracted
-    biome
-    svgo
+      # Web
+      typescript-language-server
+      vscode-langservers-extracted
+      biome
+      svgo
 
-    # Nix
-    nil
-    nixfmt-rfc-style
+      # Nix
+      nil
+      nixfmt
 
-    # Lua
-    luajitPackages.lua-lsp
+      # Lua
+      luajitPackages.lua-lsp
 
-    # Python
-    python313
-    python313Packages.python-lsp-server
-    uv
+      # Python
+      python313
+      python313Packages.python-lsp-server
+      uv
 
-    # java
-    # zulu24
-    # jdt-language-server
-    # maven
+      # java
+      # zulu24
+      # jdt-language-server
+      # maven
 
-    # Rust
-    rustc
-    rustfmt
-    rust-analyzer
-    cargo
-    # rustup
+      # Rust
+      rustc
+      rustfmt
+      rust-analyzer
+      cargo
+      # rustup
 
-    # bash
-    bash-language-server
+      # bash
+      bash-language-server
 
-    # LSP compatibility
-    efm-langserver
+      # LSP compatibility
+      efm-langserver
 
-    # Misc
-    nerd-fonts.hack
-  ] ++ lib.optionals guiEnabled [
-    # GUI
-    alacritty-graphics
-    telegram-desktop
-    thunderbird-esr-bin
-    ungoogled-chromium
-    xournalpp
-    signal-desktop
-    protonmail-bridge-gui
-    psst # native spotify
-  ] ++ lib.optionals withCorpoStuff [
-    glab # gitlab
-    jira-cli-go
-  ];
+      # Misc
+      nerd-fonts.hack
+    ]
+    ++ lib.optionals guiEnabled [
+      # GUI
+      alacritty-graphics
+      telegram-desktop
+      thunderbird-esr-bin
+      ungoogled-chromium
+      xournalpp
+      signal-desktop
+      protonmail-bridge-gui
+      psst # native spotify
+    ]
+    ++ lib.optionals withCorpoStuff [
+      glab # gitlab
+      jira-cli-go
+    ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -155,7 +167,12 @@ in
       use_nerdfont = true;
       notify = true;
       initial_screen = "cover";
-      library_tabs = ["albums" "artists" "playlists" "browse"];
+      library_tabs = [
+        "albums"
+        "artists"
+        "playlists"
+        "browse"
+      ];
     };
   };
 
