@@ -47,7 +47,6 @@ in
 
       # CLI
       btop # better htop
-      cheat # your cheats for your commands
       delta # better diff
       doggo # better dig
       duf # better df
@@ -113,9 +112,11 @@ in
 
       # Misc
       nerd-fonts.hack
+      presenterm
     ]
     ++ lib.optionals guiEnabled [
       # GUI
+      # firefox
       alacritty-graphics
       telegram-desktop
       thunderbird-esr-bin
@@ -173,6 +174,44 @@ in
         "playlists"
         "browse"
       ];
+    };
+  };
+
+  programs.firefox = {
+    enable = guiEnabled;
+
+    languagePacks = [ "en-US" "ru-RU" "nl-NL" ];
+
+    policies = {
+      # Updates & Background Services
+      AppAutoUpdate                 = false;
+      BackgroundAppUpdate           = false;
+
+      # Feature Disabling
+      DisableBuiltinPDFViewer       = true;
+      DisableFirefoxStudies         = true;
+      DisableFirefoxAccounts        = true;
+      DisableFirefoxScreenshots     = true;
+      DisableForgetButton           = true;
+      DisableMasterPasswordCreation = true;
+      DisableProfileImport          = true;
+      DisableProfileRefresh         = true;
+      DisableSetDesktopBackground   = true;
+      DisablePocket                 = true;
+      DisableTelemetry              = true;
+      DisableFormHistory            = true;
+      DisablePasswordReveal         = true;
+
+      # Access Restrictions
+      BlockAboutConfig              = false;
+      BlockAboutProfiles            = false;
+      BlockAboutSupport             = true;
+
+      # UI and Behavior
+      DisplayMenuBar                = "never";
+      DontCheckDefaultBrowser       = true;
+      HardwareAcceleration          = true;
+      OfferToSaveLogins             = true;
     };
   };
 

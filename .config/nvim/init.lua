@@ -9,7 +9,7 @@ require('config.keymaps')
 -- Plugin globals that should be set before plugin code loads.
 vim.g.rooter_silent_chdir = 0
 vim.g.rooter_resolve_links = 1
-vim.g.rooter_patterns = { '.git', '*.sln', 'build/env.sh' }
+vim.g.rooter_patterns = { '.git' }
 
 -- nvim-tree: disable netrw early.
 vim.g.loaded_netrw = 1
