@@ -181,6 +181,7 @@ in
     enable = guiEnabled;
 
     languagePacks = [ "en-US" "ru-RU" "nl-NL" ];
+    configPath = "${config.xdg.configHome}/mozilla/firefox";
 
     policies = {
       # Updates & Background Services
