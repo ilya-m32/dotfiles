@@ -4,11 +4,13 @@
   lib,
   guiEnabled,
   withCorpoStuff,
+  withRust,
   user,
   ...
 }:
 
 let
+  gtkTheme = "Adwaita:dark";
   sharedEnvVars = {
     EDITOR = "nvim";
     BROWSER = "firefox";
@@ -97,13 +99,6 @@ in
       # jdt-language-server
       # maven
 
-      # Rust
-      rustc
-      rustfmt
-      rust-analyzer
-      cargo
-      # rustup
-
       # bash
       bash-language-server
 
@@ -129,6 +124,15 @@ in
     ++ lib.optionals withCorpoStuff [
       glab # gitlab
       jira-cli-go
+      src-cli
+    ]
+    ++ lib.optionals withRust [
+      # Rust
+      rustfmt
+      rustc
+      rust-analyzer
+      cargo
+      rustup
     ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -213,6 +217,21 @@ in
       DontCheckDefaultBrowser       = true;
       HardwareAcceleration          = true;
       OfferToSaveLogins             = true;
+    };
+  };
+
+  gtk = {
+    gtk3 = {
+      theme = gtkTheme;
+      extraConfig = {
+        gtk-application-prefer-dark-theme = true;
+      };
+    };
+    gtk4 = {
+      theme = gtkTheme;
+      extraConfig = {
+        gtk-application-prefer-dark-theme = true;
+      };
     };
   };
 

@@ -16,6 +16,7 @@
       pkgs = nixpkgs.legacyPackages.${system};
       guiEnabled = true;
       withCorpoStuff = false;
+      withRust = false;
       user = "ilya";
     in
     {
@@ -26,6 +27,7 @@
           guiEnabled = guiEnabled;
           user = user;
           withCorpoStuff = withCorpoStuff;
+          withRust = withRust;
         };
 
         modules = [ ./home.nix ];
