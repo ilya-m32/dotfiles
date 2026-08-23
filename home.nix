@@ -10,7 +10,7 @@
 }:
 
 let
-  gtkTheme = "Adwaita:dark";
+  gtkTheme = "Yaru:dark";
   sharedEnvVars = {
     EDITOR = "nvim";
     BROWSER = "firefox";

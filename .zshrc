@@ -104,6 +104,9 @@ plugins=(
   yarn
 )
 
+# custom bind for vi-mode
+bindkey -M vicmd 'V' edit-command-line
+
 source $ZSH/oh-my-zsh.sh
 
 # ======================
@@ -118,3 +121,11 @@ fi
 
 # Force the cursor, some TUI apps are annoying
 precmd() { printf '\e[5 q'; }
+
+# pnpm
+export PNPM_HOME="/home/ilya/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
