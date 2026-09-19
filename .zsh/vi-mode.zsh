@@ -1,4 +1,5 @@
 bindkey -v
+KEYTIMEOUT=1
 unsetopt flowcontrol
 
 autoload -Uz \
@@ -43,7 +44,7 @@ function _vi_mode_keymap_select() {
   case $KEYMAP in
     vicmd|visual|viopp)
       VI_MODE_INDICATOR='%B%F{red}<%b<<%f'
-      printf '\e[2 q'
+      printf '\e[5 q'
       ;;
     *)
       VI_MODE_INDICATOR='%F{green}>>%B>%b%f'
