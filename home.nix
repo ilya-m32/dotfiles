@@ -58,7 +58,6 @@ in
       fzf
       jq
       ncspot
-      oh-my-zsh
       playerctl
       ripgrep
       timg # Images

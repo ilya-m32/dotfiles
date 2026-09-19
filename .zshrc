@@ -13,20 +13,7 @@ export PAGER="less"
 export TERM=tmux-256color
 export KEYTIMEOUT=1
 
-# zsh settings
-ZSH_THEME="mh-vi"
-
-CASE_SENSITIVE="false"
-HYPHEN_INSENSITIVE="true"
-DISABLE_AUTO_UPDATE="true"
-DISABLE_AUTO_TITLE="true"
-
-ENABLE_CORRECTION="false"
-COMPLETION_WAITING_DOTS="true"
-
-DISABLE_UNTRACKED_FILES_DIRTY="false"
-
-HIST_STAMPS="dd/mm/yyyy"
+setopt auto_cd
 
 # Paths
 export PATH="$HOME/.npm-global/bin:$HOME/.local/bin:$PATH"
@@ -59,12 +46,12 @@ alias sc="systemctl"
 alias plog="git log --pretty=%s --graph"
 alias s="sudo"
 alias upd="sudo apt update && sudo apt dist-upgrade"
-alias gs='git status'
 alias weather='curl "wttr.in/$HOME_CITY?lang=en"'
 alias tm='tmux attach || tmux -2 new'
 alias gcnf='git diff --name-only --diff-filter=U'
 alias vi="nvim"
 alias vim="nvim"
+alias hm-pick="home-manager generations | fzf | awk -F '-> ' '{print $2 "/activate"}'"
 
 if [ $OS_TYPE = "Linux" ]; then
   alias o="xdg-open"
@@ -79,35 +66,30 @@ fi
 setopt appendhistory
 setopt sharehistory
 setopt incappendhistory
+setopt extendedhistory
+setopt hist_expire_dups_first
 setopt hist_ignore_all_dups
 setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
+setopt hist_ignore_space
+setopt hist_verify
+
+HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
+HISTSIZE=50000
+SAVEHIST=10000
+alias history='fc -lt "dd/mm/yyyy"'
 
 # ======================
-# ======= Oh-my-zsh!
+# ======= Zsh modules
 # ======================
 
-export ZSH=$HOME/.oh-my-zsh
-
-plugins=(
-  aws
-  colorize
-  docker
-  fancy-ctrl-z
-  git
-  gnu-utils
-  rsync
-  rust
-  ubuntu
-  vi-mode
-  yarn
-)
-
-# custom bind for vi-mode
-bindkey -M vicmd 'V' edit-command-line
-
-source $ZSH/oh-my-zsh.sh
+ZSH_CONFIG_DIR="${${(%):-%x}:A:h}/.zsh"
+source "$ZSH_CONFIG_DIR/theme.zsh"
+source "$ZSH_CONFIG_DIR/completion.zsh"
+source "$ZSH_CONFIG_DIR/vi-mode.zsh"
+source "$ZSH_CONFIG_DIR/git-aliases.zsh"
+unset ZSH_CONFIG_DIR
 
 # ======================
 # ======= base16-themes
@@ -118,9 +100,6 @@ if command -v tinty >/dev/null 2>&1; then
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# Force the cursor, some TUI apps are annoying
-precmd() { printf '\e[5 q'; }
 
 # pnpm
 export PNPM_HOME="/home/ilya/.local/share/pnpm"
