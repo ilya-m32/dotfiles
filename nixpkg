@@ -1,0 +1,324 @@
+#!/usr/bin/env node
+
+const fs = require("node:fs/promises");
+const path = require("node:path");
+const process = require("node:process");
+const readline = require("node:readline/promises");
+const { parseArgs, styleText } = require("node:util");
+
+const SYSTEM = "x86_64-linux";
+const SEARCH_HOST = "https://www.nixsearch.com";
+const REQUEST_TIMEOUT_MS = 15000;
+
+const commands = {
+  versions: {
+    aliases: ["vers"],
+    args: ["package"],
+    description: "List available versions for a package.",
+    examples: ["nixpkg versions opencode"],
+    run: runVersions,
+  },
+  rev: {
+    args: ["package", "version"],
+    description: "Print the nixpkgs revision for a package version.",
+    examples: ["nixpkg rev opencode 1.18.29"],
+    run: runRev,
+  },
+  pin: {
+    args: ["package", "version"],
+    description: "Pin a package version in package-pins.json.",
+    examples: ["nixpkg pin opencode 1.18.29"],
+    run: runPin,
+  },
+  list: {
+    aliases: ["pins"],
+    args: [],
+    description: "List current package pins.",
+    examples: ["nixpkg list"],
+    run: runList,
+  },
+  unpin: {
+    args: ["package"],
+    description: "Remove a package pin.",
+    examples: ["nixpkg unpin opencode"],
+    run: runUnpin,
+  },
+};
+
+class UsageError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "UsageError";
+  }
+}
+
+function format(text, color, stream = process.stdout) {
+  if (!stream.isTTY) return text;
+  return styleText(color, text);
+}
+
+function commandName(name) {
+  return format(name, ["bold", "cyan"]);
+}
+
+function heading(text) {
+  return format(text, ["bold", "underline"]);
+}
+
+function resolveCommand(name) {
+  if (commands[name]) return [name, commands[name]];
+
+  for (const [canonical, command] of Object.entries(commands)) {
+    if (command.aliases?.includes(name)) return [canonical, command];
+  }
+
+  return [undefined, undefined];
+}
+
+function usageFor(name, command) {
+  const args = command.args.map((arg) => `[${arg}]`).join(" ");
+  return `nixpkg ${name}${args ? ` ${args}` : ""}`;
+}
+
+function printHelp(name) {
+  if (name) {
+    const [canonical, command] = resolveCommand(name);
+    if (!command) throw new UsageError(`Unknown command: ${name}`);
+
+    console.log(heading(`nixpkg ${canonical}`));
+    console.log(command.description);
+    console.log();
+    console.log(`${heading("Usage")}: ${usageFor(canonical, command)}`);
+    console.log();
+    console.log(heading("Examples"));
+    for (const example of command.examples) console.log(`  ${example}`);
+    console.log();
+    printOptions();
+    return;
+  }
+
+  console.log(heading("nixpkg"));
+  console.log("Resolve and pin historical nixpkgs package versions.");
+  console.log();
+  console.log(heading("Usage"));
+  console.log("  nixpkg <command> [args] [options]");
+  console.log();
+  console.log(heading("Commands"));
+
+  for (const [canonical, command] of Object.entries(commands)) {
+    const aliases = command.aliases?.length ? ` (${command.aliases.join(", ")})` : "";
+    console.log(`  ${commandName(canonical).padEnd(20)} ${command.description}${aliases}`);
+  }
+
+  console.log();
+  printOptions();
+}
+
+function printOptions() {
+  console.log(heading("Options"));
+  console.log("  -f, --file <path>  Use a different pins manifest.");
+  console.log("  -j, --json         Print machine-readable JSON.");
+  console.log("  -h, --help         Show help.");
+}
+
+function defaultPinsFile() {
+  return process.env.NIXPKG_PINS_FILE || path.join(__dirname, "package-pins.json");
+}
+
+async function promptForMissing(args, names) {
+  if (args.length >= names.length) return args;
+
+  if (!process.stdin.isTTY || !process.stdout.isTTY) {
+    throw new UsageError(`Missing argument: ${names[args.length]}`);
+  }
+
+  const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+
+  try {
+    const result = [...args];
+    for (const name of names.slice(args.length)) {
+      const answer = await rl.question(`${format(name, "cyan")}: `);
+      if (!answer.trim()) throw new UsageError(`Missing argument: ${name}`);
+      result.push(answer.trim());
+    }
+    return result;
+  } finally {
+    rl.close();
+  }
+}
+
+async function fetchJson(endpoint, params) {
+  const url = new URL(endpoint, SEARCH_HOST);
+
+  for (const [key, value] of Object.entries(params)) {
+    url.searchParams.set(key, value);
+  }
+
+  const response = await fetch(url, { signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS) });
+  const body = await response.text();
+
+  if (!response.ok) {
+    throw new Error(`${response.status} ${response.statusText}${body ? `: ${body}` : ""}`);
+  }
+
+  try {
+    return JSON.parse(body);
+  } catch (error) {
+    throw new Error(`Invalid JSON from ${url}: ${error.message}`);
+  }
+}
+
+async function resolvePackage(name, version) {
+  const result = await fetchJson("/v2/resolve", { name, version });
+  const system = result.systems?.[SYSTEM];
+  const installable = system?.flake_installable;
+
+  if (!result.version || !installable?.ref?.rev || !installable?.attr_path) {
+    throw new Error(`No ${SYSTEM} resolution found for ${name}@${version}`);
+  }
+
+  return {
+    version: result.version,
+    rev: installable.ref.rev,
+    attrPath: installable.attr_path,
+  };
+}
+
+async function readPins(file) {
+  try {
+    const content = await fs.readFile(file, "utf8");
+    return content.trim() ? JSON.parse(content) : {};
+  } catch (error) {
+    if (error.code === "ENOENT") return {};
+    throw error;
+  }
+}
+
+async function writePins(file, pins) {
+  const dir = path.dirname(file);
+  const tmp = path.join(dir, `.package-pins.${process.pid}.${Date.now()}.json`);
+
+  await fs.mkdir(dir, { recursive: true });
+  await fs.writeFile(tmp, `${JSON.stringify(pins, null, 2)}\n`);
+
+  try {
+    await fs.rename(tmp, file);
+  } catch (error) {
+    await fs.rm(tmp, { force: true });
+    throw error;
+  }
+}
+
+function printJson(value) {
+  console.log(JSON.stringify(value, null, 2));
+}
+
+async function runVersions([name], options) {
+  const result = await fetchJson("/v1/search", { q: name });
+  const match = result.packages?.find((pkg) => pkg.name === name);
+  if (!match) throw new Error(`No versions found for ${name}`);
+
+  const versions = (match.versions || []).map((item) => item.version).filter(Boolean);
+  if (options.json) return printJson(versions);
+
+  for (const version of versions) console.log(version);
+}
+
+async function runRev([name, version], options) {
+  const pin = await resolvePackage(name, version);
+  if (options.json) return printJson(pin);
+  console.log(pin.rev);
+}
+
+async function runPin([name, version], options) {
+  const resolved = await resolvePackage(name, version);
+  const pins = await readPins(options.file);
+
+  pins[name] = resolved;
+  await writePins(options.file, pins);
+
+  if (options.json) return printJson({ name, ...resolved });
+  console.log(`${name} ${resolved.version} -> ${resolved.rev}#${resolved.attrPath}`);
+}
+
+async function runList(_args, options) {
+  const pins = await readPins(options.file);
+  const entries = Object.entries(pins);
+
+  if (options.json) return printJson(pins);
+
+  if (entries.length === 0) {
+    console.log("no pins");
+    return;
+  }
+
+  if (process.stdout.isTTY) {
+    console.table(
+      entries.map(([name, pin]) => ({
+        package: name,
+        version: pin.version,
+        rev: pin.rev,
+        attrPath: pin.attrPath || name,
+      }))
+    );
+    return;
+  }
+
+  for (const [name, pin] of entries) {
+    console.log(`${name} ${pin.version} ${pin.rev} #${pin.attrPath || name}`);
+  }
+}
+
+async function runUnpin([name], options) {
+  const pins = await readPins(options.file);
+  delete pins[name];
+  await writePins(options.file, pins);
+
+  if (options.json) return printJson({ removed: name });
+}
+
+async function main() {
+  const parsed = parseArgs({
+    allowPositionals: true,
+    options: {
+      file: { type: "string", short: "f" },
+      help: { type: "boolean", short: "h" },
+      json: { type: "boolean", short: "j" },
+    },
+  });
+
+  const [rawCommand, ...positionals] = parsed.positionals;
+  const options = {
+    file: parsed.values.file || defaultPinsFile(),
+    json: parsed.values.json || false,
+  };
+
+  if (parsed.values.help) {
+    printHelp(rawCommand);
+    return;
+  }
+
+  if (!rawCommand) {
+    printHelp();
+    throw new UsageError("Missing command");
+  }
+
+  const [canonical, command] = resolveCommand(rawCommand);
+  if (!command) {
+    printHelp();
+    throw new UsageError(`Unknown command: ${rawCommand}`);
+  }
+
+  if (positionals.length > command.args.length) {
+    throw new UsageError(`Too many arguments for ${canonical}`);
+  }
+
+  const args = await promptForMissing(positionals, command.args);
+  await command.run(args, options);
+}
+
+main().catch((error) => {
+  const message = error instanceof UsageError ? error.message : `nixpkg: ${error.message}`;
+  console.error(format(message, ["bold", "red"], process.stderr));
+  process.exit(error instanceof UsageError ? 2 : 1);
+});
