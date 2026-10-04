@@ -14,3 +14,15 @@ alias gswc='git switch --create'
 alias glog='git log --oneline --decorate --graph'
 alias plog='git log --pretty=%s --graph'
 alias gcnf='git diff --name-only --diff-filter=U'
+
+function gcm() {
+  for b in master main; do
+    if git show-ref --quiet "refs/heads/$b"; then
+      git switch "$b"
+      return 0
+    fi
+  done
+
+  echo "gcm: no master or main branch found" >&2
+  return 1
+}
