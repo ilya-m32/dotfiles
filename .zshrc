@@ -78,6 +78,7 @@ alias history='fc -lt "dd/mm/yyyy"'
 ZSH_CONFIG_DIR="${${(%):-%x}:A:h}/.zsh"
 source "$ZSH_CONFIG_DIR/theme.zsh"
 source "$ZSH_CONFIG_DIR/devshell.zsh"
+source "$ZSH_CONFIG_DIR/nix-shell.zsh"
 source "$ZSH_CONFIG_DIR/completion.zsh"
 source "$ZSH_CONFIG_DIR/vi-mode.zsh"
 source "$ZSH_CONFIG_DIR/git-aliases.zsh"
