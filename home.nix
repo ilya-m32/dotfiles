@@ -15,6 +15,7 @@ let
     EDITOR = "nvim";
     BROWSER = "firefox";
     TERMINAL = "alacritty";
+    SHELL = "${pkgs.zsh}/bin/zsh";
     PAGER = "less";
     ELECTRON_OZONE_PLATFORM_HINT = "auto";
     NIXOS_OZONE_WL = "1";
