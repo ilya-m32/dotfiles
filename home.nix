@@ -10,7 +10,9 @@
 }:
 
 let
-  gtkTheme = "Yaru:dark";
+  iconTheme = "Yaru-sage";
+  cursorTheme = "Yaru";
+
   sharedEnvVars = {
     EDITOR = "nvim";
     BROWSER = "firefox";
@@ -18,8 +20,9 @@ let
     SHELL = "${pkgs.zsh}/bin/zsh";
     PAGER = "less";
     ELECTRON_OZONE_PLATFORM_HINT = "auto";
+    GTK_USE_PORTAL = "1";
     NIXOS_OZONE_WL = "1";
-    XCURSOR_THEME = "Yaru";
+    XCURSOR_THEME = cursorTheme;
   };
 in
 {
@@ -81,6 +84,7 @@ in
       vscode-langservers-extracted
       biome
       svgo
+      oxipng
 
       # Nix
       nil
@@ -120,6 +124,7 @@ in
       signal-desktop
       protonmail-bridge-gui
       psst # native spotify
+      yaru-theme
     ]
     ++ lib.optionals withCorpoStuff [
       glab # gitlab
@@ -156,6 +161,16 @@ in
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+      cursor-theme = cursorTheme;
+      icon-theme = iconTheme;
+    };
+  };
+
+  fonts.fontconfig.enable = guiEnabled;
+
   # Neovim
   programs.neovim = {
     viAlias = true;
@@ -184,57 +199,61 @@ in
   programs.firefox = {
     enable = guiEnabled;
 
-    languagePacks = [ "en-US" "ru-RU" "nl-NL" ];
+    languagePacks = [
+      "en-US"
+      "ru-RU"
+      "nl-NL"
+    ];
     configPath = "${config.xdg.configHome}/mozilla/firefox";
 
     policies = {
       # Updates & Background Services
-      AppAutoUpdate                 = false;
-      BackgroundAppUpdate           = false;
+      AppAutoUpdate = false;
+      BackgroundAppUpdate = false;
 
       # Feature Disabling
-      DisableBuiltinPDFViewer       = true;
-      DisableFirefoxStudies         = true;
-      DisableFirefoxAccounts        = true;
-      DisableFirefoxScreenshots     = true;
-      DisableForgetButton           = true;
+      DisableBuiltinPDFViewer = true;
+      DisableFirefoxStudies = true;
+      DisableFirefoxAccounts = true;
+      DisableFirefoxScreenshots = true;
+      DisableForgetButton = true;
       DisableMasterPasswordCreation = true;
-      DisableProfileImport          = true;
-      DisableProfileRefresh         = true;
-      DisableSetDesktopBackground   = true;
-      DisablePocket                 = true;
-      DisableTelemetry              = true;
-      DisableFormHistory            = true;
-      DisablePasswordReveal         = true;
+      DisableProfileImport = true;
+      DisableProfileRefresh = true;
+      DisableSetDesktopBackground = true;
+      DisablePocket = true;
+      DisableTelemetry = true;
+      DisableFormHistory = true;
+      DisablePasswordReveal = true;
 
       # Access Restrictions
-      BlockAboutConfig              = false;
-      BlockAboutProfiles            = false;
-      BlockAboutSupport             = true;
+      BlockAboutConfig = false;
+      BlockAboutProfiles = false;
+      BlockAboutSupport = true;
 
       # UI and Behavior
-      DisplayMenuBar                = "never";
-      DontCheckDefaultBrowser       = true;
-      HardwareAcceleration          = true;
-      OfferToSaveLogins             = true;
+      DisplayMenuBar = "never";
+      DontCheckDefaultBrowser = true;
+      HardwareAcceleration = true;
+      OfferToSaveLogins = true;
     };
   };
 
   gtk = {
-    gtk3 = {
-      theme = gtkTheme;
-      extraConfig = {
-        gtk-application-prefer-dark-theme = true;
-      };
+    enable = guiEnabled;
+
+    iconTheme = {
+      name = iconTheme;
+      package = pkgs.yaru-theme;
     };
-    gtk4 = {
-      theme = gtkTheme;
-      extraConfig = {
-        gtk-application-prefer-dark-theme = true;
-      };
-    };
+
+  };
+
+  qt = {
+    enable = guiEnabled;
+    platformTheme.name = "gtk3";
   };
 
   xdg.mime.enable = true;
-  xdg.systemDirs.data = [ "${config.home.homeDirectory}/.nix-profile/share/applications" ];
+  xdg.systemDirs.data = [ "${config.home.homeDirectory}/.nix-profile/share" ];
 }
