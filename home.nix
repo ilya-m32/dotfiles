@@ -152,7 +152,6 @@ in
 
     # mkdir -p $HOME/.config/tmux
     # ln -sf $PWD/.config/tmux/tmux.conf $HOME/.config/tmux/tmux.conf
-    # ln -sf $PWD/.config/tmux/ilya-m.tmuxtheme $HOME/.config/tmux/ilya-m.tmuxtheme
   };
 
   home.sessionVariables = sharedEnvVars;
