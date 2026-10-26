@@ -47,7 +47,6 @@ alias sc="systemctl"
 alias s="sudo"
 alias upd="sudo apt update && sudo apt dist-upgrade"
 alias weather='curl "wttr.in/$HOME_CITY?lang=en"'
-alias tm='tmux attach || tmux -2 new'
 alias vi="nvim"
 alias vim="nvim"
 alias hm-pick="home-manager generations | fzf | awk -F '-> ' '{print $2 "/activate"}'"
@@ -81,6 +80,7 @@ source "$ZSH_CONFIG_DIR/devshell.zsh"
 source "$ZSH_CONFIG_DIR/nix-shell.zsh"
 source "$ZSH_CONFIG_DIR/completion.zsh"
 source "$ZSH_CONFIG_DIR/vi-mode.zsh"
+source "$ZSH_CONFIG_DIR/tmux.zsh"
 source "$ZSH_CONFIG_DIR/git-aliases.zsh"
 unset ZSH_CONFIG_DIR
 
